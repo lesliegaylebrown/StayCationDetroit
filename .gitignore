@@ -1,0 +1,25 @@
+\# Eclipse
+.classpath
+.project
+.settings/
+
+\# Intellij
+.idea/
+*.iml
+*.iws
+out/
+
+\# Mac
+.DS_Store
+
+\# Maven
+log/
+target/
+*.class
+
+\#hibernate
+hibernate.cfg.xml
+
+\#here we would ignore our DBCredentials file too
+\#commented out for class though
+\#DBCredentials.java

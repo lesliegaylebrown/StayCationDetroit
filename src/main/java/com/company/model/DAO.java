@@ -1,6 +1,7 @@
 package com.company.model;
 
-import com.company.controller.Customer;
+import com.company.controller.User;
+import com.company.controller.User;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Connection;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  * Created by peter on 8/16/17.
  */
 public class DAO {
-    public static ArrayList<Customer> getCustomerList () {
+    public static ArrayList<User> getUserList() {
         // define the data for the connection
         //connection info was pulled out into DBCredentials
         //so that file can be hidden
@@ -32,24 +33,25 @@ public class DAO {
 
             // create the db statement
 
-            String readCustomersCommand = "select customerid,companyname from customers";
+            String readUserCommand = "select userId,fname, lname, email, cellphone, password from users";
 
-            Statement readCustomers = mysqlConnection.createStatement();// creates the statement
+            Statement readUsers = mysqlConnection.createStatement();// creates the statement
 
-            ResultSet results = readCustomers.executeQuery(readCustomersCommand);// executes the statement
+            ResultSet results = readUsers.executeQuery(readUserCommand);// executes the statement
             // array list of customers
-            ArrayList<Customer> customerList = new ArrayList<Customer>();
+            ArrayList<User> userList = new ArrayList<User>();
 
             // map from the ResultSet to the ArrayList
             while(results.next())
             {
-                Customer temp = new Customer(results.getString(1),
-                        results.getString(2));
-                customerList.add(temp);
+                User temp = new User(results.getString(1),
+                        results.getString(2), results.getString(3),
+                        results.getString(4), results.getString(5), results.getString(6));
+                userList.add(temp);
 
             }
 
-            return customerList;
+            return userList;
         }
         catch(Exception ex)
         {
@@ -58,11 +60,13 @@ public class DAO {
         }
     }
 
-    public static boolean addCustomer (
-            String custID,
-            String compName,
-            String contactName,
-            String contactTitle
+    public static boolean addUser (
+            String userId,
+            String fName,
+            String lName,
+            String email,
+            String Cphone,
+            String password
     ) {
 
         try {
@@ -74,18 +78,21 @@ public class DAO {
                     DBCredentials.USERNAME,
                     DBCredentials.PASSWORD);
 
-            String addCustomerCommand = "INSERT INTO Customers " +
-                    "(CustomerID, CompanyName, ContactName, ContactTitle) " +
+            String addUserCommand = "INSERT INTO users " +
+                    "(userId, fName, lName, email, cellPhone, password) " +
                     "VALUES ('" +
-                    custID + "', '" +
-                    compName + "', '" +
-                    contactName + "', '" +
-                    contactTitle + "')";
-            System.out.println("SQL Query " + addCustomerCommand);
+                    userId + "', '" +
+                    fName + "', '" +
+                    lName + "', '" +
+                    email + "', '" +
+                    Cphone + "', '" +
+
+                    password + "')";
+            System.out.println("SQL Query " + addUserCommand);
 
             Statement st = mysqlConnection.createStatement();// creates the statement
 
-            int result = st.executeUpdate(addCustomerCommand);// executes the statement
+            int result = st.executeUpdate(addUserCommand);// executes the statement
             // array list of customers
 
             //if (result == 1)
@@ -98,7 +105,7 @@ public class DAO {
         }
     }
 
-    public static boolean deleteCustomer (String custID) {
+    public static boolean deleteUser (String userId) {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -109,14 +116,14 @@ public class DAO {
                     DBCredentials.USERNAME,
                     DBCredentials.PASSWORD);
 
-            String deleteCustomerCommand = "DELETE FROM Customers " +
-                    "WHERE CustomerID = '" +
-                    custID + "'";
-            System.out.println("SQL Deletion Query " + deleteCustomerCommand);
+            String deleteUserCommand = "DELETE FROM users " +
+                    "WHERE userId = '" +
+                    userId + "'";
+            System.out.println("SQL Deletion Query " + deleteUserCommand);
 
             Statement st = mysqlConnection.createStatement();// creates the statement
 
-            int result = st.executeUpdate(deleteCustomerCommand);// executes the statement
+            int result = st.executeUpdate(deleteUserCommand);// executes the statement
             // array list of customers
 
             //if (result == 1)

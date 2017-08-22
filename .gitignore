@@ -17,6 +17,10 @@ log/
 target/
 *.class
 
+#here we would ignore our DBCredentials file too
+#commented out for class though
+#DBCredentials.java
+
 \#hibernate
 hibernate.cfg.xml
 

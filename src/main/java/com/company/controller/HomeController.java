@@ -58,6 +58,10 @@ public class HomeController {
 
         return mv;
     }
+    @RequestMapping(value = "buildings")
+    public ModelAndView buildings(){
+        return new ModelAndView("buildings");
+        }
 
     @RequestMapping(value = "getAllUsers")
     public ModelAndView getAllUsers() {

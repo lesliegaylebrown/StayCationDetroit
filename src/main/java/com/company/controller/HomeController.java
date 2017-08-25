@@ -1,7 +1,7 @@
 package com.company.controller;
 
-
 import com.company.model.DAO;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +29,8 @@ public class HomeController {
         return "userForm";
     }
 
-//    *****************************************
-//
-
-
     //handle the submit of the user form
-    @RequestMapping(value = "addUser")
+    @RequestMapping(value = "/addUser")
     public ModelAndView addUser (
             @RequestParam("userId") String userId,
             @RequestParam("fName") String fName,
@@ -43,6 +39,11 @@ public class HomeController {
         @RequestParam("Cphone") String cPhone,
         @RequestParam("password") String password
         ) {
+        StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
+
+        String passEncrypted = enc.encryptPassword(password);
+
+        password = passEncrypted;
 
         //add the info to DB through DAO
         boolean result = DAO.addUser(userId, fName, lName, email, cPhone, password);
@@ -52,7 +53,7 @@ public class HomeController {
             return new ModelAndView("error", "errmsg", "user add failed");
         }
 
-        ModelAndView mv = new ModelAndView("addUserResult");
+        ModelAndView mv = new ModelAndView("/index");
         mv.addObject("UserId", userId);
         mv.addObject("FirstName", fName);
         mv.addObject("LastName", lName);
@@ -60,9 +61,9 @@ public class HomeController {
         mv.addObject("CellPhone", cPhone);
         mv.addObject("Password", password);
 
+
         return mv;
     }
-
 
     @RequestMapping(value = "buildings")
     public ModelAndView buildings(){
@@ -97,5 +98,50 @@ public class HomeController {
         //and add to it
         model.addAttribute("userId", userId);
         return "/views/deletedUserResult";
+    }
+
+    @RequestMapping(value = "login")
+    public String login() {
+        //if a controller method returns just a String
+        //Spring MVC knows it's a view name
+        return "userLogin";
+    }
+
+    @RequestMapping(value = "/checklogin")
+
+    public ModelAndView login (
+            @RequestParam("userId")
+                    String userId,
+
+            @RequestParam("password")
+                    String password
+    ) {
+
+        //add the info to DB through DAO
+        boolean result = DAO.login(userId, password);
+
+
+        //best to check the result
+        if (!result) {
+            //still have to write this view
+            return new ModelAndView("error", "errmsg", "user login failed");
+
+        }
+//            @RequestMapping(value = "buildings")
+//            public ModelAndView buildings(){
+//                return new ModelAndView("buildings");
+//        }
+
+        ModelAndView mv = new ModelAndView("/addUserResult");
+        mv.addObject("UserId", userId);
+//        mv.addObject("FirstName", fName);
+//        mv.addObject("LastName", lName);
+//        mv.addObject("Email", email);
+//        mv.addObject("CellPhone", cPhone);
+        mv.addObject("Password", password);
+
+
+
+        return mv;
     }
 }

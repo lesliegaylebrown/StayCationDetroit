@@ -1,9 +1,8 @@
 package com.company.model;
 
 import com.company.controller.User;
-import com.company.controller.User;
 import org.jasypt.util.password.StrongPasswordEncryptor;
-import org.springframework.web.servlet.ModelAndView;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,6 +14,9 @@ import java.util.ArrayList;
  */
 
 public class DAO {
+
+    StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
+
     public static ArrayList<User> getUserList() {
         // define the data for the connection
         //connection info was pulled out into DBCredentials
@@ -93,14 +95,75 @@ public class DAO {
             int result = st.executeUpdate(addUserCommand);// executes the statement
             // array list of users
 
-           if (result == 1)
-            return true;
+            if (result == 1)
+                return true;
         } catch (Exception ex) {
             ex.printStackTrace();
-             //null result indicates an issue
-        }return false;
+            //null result indicates an issue
+        }
+        return false;
 
-}
+    }
+
+
+    public static boolean login(
+            String userId,
+            String password
+
+    ) {
+        System.out.println("LOGIN: DAO---" + userId + "\n" + password);
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            Connection mysqlConnection;
+            mysqlConnection = DriverManager.getConnection(
+                    DBCredentials.DB_ADDRESS,
+                    DBCredentials.USERNAME,
+                    DBCredentials.PASSWORD);
+
+            String readUserCommand = "select userId,fname, lname, email, cellphone, password from users where userId='"
+            + userId + "'";
+
+            Statement readUsers = mysqlConnection.createStatement();// creates the statement
+
+            ResultSet results = readUsers.executeQuery(readUserCommand);// executes the statement
+            // array list of users
+            ArrayList<User> userList = new ArrayList<User>();
+
+            // map from the ResultSet to the ArrayList
+            while (results.next()) {
+//                User temp = new User(results.getString(1),
+//                        results.getString(2), results.getString(3),
+//                        results.getString(4), results.getString(5), results.getString(6));
+                String dbResPassword = results.getString(6);
+                StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
+                boolean match = enc.checkPassword(password, dbResPassword);
+
+                if (match) {
+                    return true;
+                }
+            }
+
+            return false;
+//            boolean match = enc.checkPassword(password, passEncrypted);
+//            //if the return value of checkPassword is true,
+//            //return the view with info filled in
+//            if (match) {
+//                System.out.println("The password match; you are logged in");
+//            } else {//if it's false, return a log in again view
+//                System.out.println("Mismatch--please try again");
+//            }
+//
+//            System.out.println("POST DB PASSWORD");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+        }
+        return true;
+    }
+
     public static boolean deleteUser(String userId) {
 
         try {
@@ -129,7 +192,5 @@ public class DAO {
             return false; //null result indicates an issue
         }
     }
-
-    StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
 
 }

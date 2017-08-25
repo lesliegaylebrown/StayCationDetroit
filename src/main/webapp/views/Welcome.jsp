@@ -11,7 +11,7 @@
     <title>Welcome</title>
 </head>
 <body>
-Hello World
+   <h3>Please register or login</h3>
 <br/>
 <br/>
 <a href="userForm"><button> Register</button></a>

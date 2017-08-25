@@ -31,14 +31,14 @@ public class HomeController {
 
     //handle the submit of the customer form
     @RequestMapping(value = "/addUser")
-    public ModelAndView addCustomer (
+    public ModelAndView addCustomer(
             @RequestParam("userId") String userId,
             @RequestParam("fName") String fName,
-        @RequestParam("lName") String lName,
-        @RequestParam("email") String email,
-        @RequestParam("Cphone") String cPhone,
-        @RequestParam("password") String password
-        ) {
+            @RequestParam("lName") String lName,
+            @RequestParam("email") String email,
+            @RequestParam("Cphone") String cPhone,
+            @RequestParam("password") String password
+    ) {
 
         //add the info to DB through DAO
         boolean result = DAO.addUser(userId, fName, lName, email, cPhone, password);
@@ -58,10 +58,42 @@ public class HomeController {
 
         return mv;
     }
+
+
+
+    @RequestMapping(value = "outdoorsresponse")
+    public ModelAndView outdoorsresponse(){ return new ModelAndView("outdoorsresponse");}
+
+        @RequestMapping(value = "outdoors")
+    public ModelAndView outdoors(){return new ModelAndView("outdoors");}
+
+    @RequestMapping(value = "nightsresponse")
+    public ModelAndView nightsresponse(){return new ModelAndView("nightsresponse");}
+
+    @RequestMapping(value = "nights")
+    public ModelAndView nights(){ return new ModelAndView("nights");}
+
+    @RequestMapping(value = "goodbye")
+    public ModelAndView goodbye(){return new ModelAndView("goodbye");}
+
+    @RequestMapping(value = "eatsresponse")
+    public ModelAndView eatsresponse(){ return new ModelAndView("eatsresponse");}
+
+    @RequestMapping(value = "eats")
+    public ModelAndView eats(){ return new ModelAndView("eats");}
+
+    @RequestMapping(value ="categories")
+    public ModelAndView categories(){ return new ModelAndView("categories()");}
+
+
     @RequestMapping(value = "buildings")
-    public ModelAndView buildings(){
+    public ModelAndView buildings() {
         return new ModelAndView("buildings");
-        }
+    }
+
+    @RequestMapping(value = "buildresponse")
+    public ModelAndView buildresponse(){ return new ModelAndView("buildresponse");
+    }
 
     @RequestMapping(value = "getAllUsers")
     public ModelAndView getAllUsers() {
@@ -72,11 +104,11 @@ public class HomeController {
             return new ModelAndView("error", "errmsg", "Customer list is null");
         }
 
-        return new ModelAndView("delUserView","uList",userList);
+        return new ModelAndView("delUserView", "uList", userList);
     }
 
     @RequestMapping("/deleteUser")
-    public String deleteUser (
+    public String deleteUser(
             Model model,
             @RequestParam("userId") String userId) {
         //make it happen with the DB

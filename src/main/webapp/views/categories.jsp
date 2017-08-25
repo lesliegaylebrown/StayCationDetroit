@@ -11,6 +11,7 @@
     <title>Categories</title>
 </head>
 <body>
+<h4>Please select the activities you would like to explore</h4>
 
 </body>
 </html>

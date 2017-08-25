@@ -19,19 +19,23 @@ import java.util.ArrayList;
 public class HomeController {
     @RequestMapping(value = "/")
     public String Home() {
-        return "Welcome";// or views/test
+        return "index";// or views/test
     }
 
-    @RequestMapping(value = "/userForm")
+    @RequestMapping(value = "userForm")
     public String userForm() {
         //if a controller method returns just a String
         //Spring MVC knows it's a view name
         return "userForm";
     }
 
-    //handle the submit of the customer form
-    @RequestMapping(value = "/addUser")
-    public ModelAndView addCustomer (
+//    *****************************************
+//
+
+
+    //handle the submit of the user form
+    @RequestMapping(value = "addUser")
+    public ModelAndView addUser (
             @RequestParam("userId") String userId,
             @RequestParam("fName") String fName,
         @RequestParam("lName") String lName,
@@ -43,9 +47,9 @@ public class HomeController {
         //add the info to DB through DAO
         boolean result = DAO.addUser(userId, fName, lName, email, cPhone, password);
         //best to check the result
-        if (result == false) {
+        if (!result) {
             //still have to write this view
-            return new ModelAndView("error", "errmsg", "customer add failed");
+            return new ModelAndView("error", "errmsg", "user add failed");
         }
 
         ModelAndView mv = new ModelAndView("addUserResult");
@@ -59,26 +63,32 @@ public class HomeController {
         return mv;
     }
 
+
+    @RequestMapping(value = "buildings")
+    public ModelAndView buildings(){
+        return new ModelAndView("buildings");
+        }
+
     @RequestMapping(value = "getAllUsers")
     public ModelAndView getAllUsers() {
         ArrayList<User> userList = DAO.getUserList();
 
         //TODO: make error.jsp
         if (userList == null) {
-            return new ModelAndView("error", "errmsg", "Customer list is null");
+            return new ModelAndView("error", "errmsg", "User list is null");
         }
 
         return new ModelAndView("delUserView","uList",userList);
     }
 
-    @RequestMapping("/deleteUser")
+    @RequestMapping("deleteUser")
     public String deleteUser (
             Model model,
             @RequestParam("userId") String userId) {
         //make it happen with the DB
         boolean result = DAO.deleteUser(userId);
 
-        if (result == false) {
+        if (!result) {
             model.addAttribute("errmsg", "Delete failed");
             return "error";
         }
@@ -86,6 +96,6 @@ public class HomeController {
         //get the model as a argument above
         //and add to it
         model.addAttribute("userId", userId);
-        return "viewUsers";
+        return "/views/deletedUserResult";
     }
 }

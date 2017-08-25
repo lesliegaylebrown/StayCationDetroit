@@ -1,20 +1,17 @@
 <%--
   Created by IntelliJ IDEA.
-  User: kamel
-  Date: 7/13/2016
-  Time: 3:19 PM
+  User: endo
+  Date: 8/23/2017
+  Time: 2:56 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Welcome</title>
+    <title>OutdoorStuff</title>
 </head>
 <body>
-Hello World
-<br/>
-<br/>
-<a href="userForm"><button> Register</button></a>
-
+<h1>Outdoor Stuff</h1>
+<h2>Under Construction</h2>
 </body>
 </html>

@@ -2,8 +2,8 @@ package com.company.model;
 
 import com.company.controller.User;
 import com.company.controller.User;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by peter on 8/16/17.
  */
+
 public class DAO {
     public static ArrayList<User> getUserList() {
         // define the data for the connection
@@ -38,12 +39,11 @@ public class DAO {
             Statement readUsers = mysqlConnection.createStatement();// creates the statement
 
             ResultSet results = readUsers.executeQuery(readUserCommand);// executes the statement
-            // array list of customers
+            // array list of users
             ArrayList<User> userList = new ArrayList<User>();
 
             // map from the ResultSet to the ArrayList
-            while(results.next())
-            {
+            while (results.next()) {
                 User temp = new User(results.getString(1),
                         results.getString(2), results.getString(3),
                         results.getString(4), results.getString(5), results.getString(6));
@@ -52,15 +52,13 @@ public class DAO {
             }
 
             return userList;
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return null; //null result indicates an issue
         }
     }
 
-    public static boolean addUser (
+    public static boolean addUser(
             String userId,
             String fName,
             String lName,
@@ -93,19 +91,17 @@ public class DAO {
             Statement st = mysqlConnection.createStatement();// creates the statement
 
             int result = st.executeUpdate(addUserCommand);// executes the statement
-            // array list of customers
+            // array list of users
 
-            //if (result == 1)
+           if (result == 1)
             return true;
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
-            return false; //null result indicates an issue
-        }
-    }
+             //null result indicates an issue
+        }return false;
 
-    public static boolean deleteUser (String userId) {
+}
+    public static boolean deleteUser(String userId) {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -124,15 +120,16 @@ public class DAO {
             Statement st = mysqlConnection.createStatement();// creates the statement
 
             int result = st.executeUpdate(deleteUserCommand);// executes the statement
-            // array list of customers
+            // array list of users
 
             //if (result == 1)
             return true;
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false; //null result indicates an issue
         }
     }
+
+    StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
+
 }

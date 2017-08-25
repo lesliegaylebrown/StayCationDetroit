@@ -11,10 +11,19 @@
     <title>Welcome</title>
 </head>
 <body>
-Hello World
+Welcome to StayCation: Detroit Qline Edition
 <br/>
 <br/>
 <a href="userForm"><button> Register</button></a>
+<a href="buildings"><button>Buildings</button></a>
+<a href="viewUsers"><button>View Users</button></a>
+<a href="deleteUser"><button>Delete Account</button></a>
+<a href="userLogin"><button>Login</button></a>
+<%--<a href="buildings"><button>Buildings</button></a>--%>
+<%--<a href="buildings"><button>Buildings</button></a>--%>
+<%--<a href="buildings"><button>Buildings</button></a>--%>
+<%--<a href="buildings"><button>Buildings</button></a>--%>
+<%--<a href="buildings"><button>Buildings</button></a>--%>
 
 
 </body>

@@ -19,7 +19,7 @@
     Cell Pnone: <input name="Cphone" type="text" /><br />
     Password: <input name="password" type="password" /><br />
     Re-Enter Password: <input name="password2" type="password" /><br />
-    <input type="submit" value="Add Customer" />
+    <input type="submit" value="Add User" />
 </form>
 </body>
 </html>

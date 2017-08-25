@@ -4,7 +4,6 @@ import com.company.controller.User;
 import com.company.controller.User;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by peter on 8/16/17.
  */
+
 public class DAO {
     public static ArrayList<User> getUserList() {
         // define the data for the connection

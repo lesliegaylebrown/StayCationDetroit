@@ -11,7 +11,7 @@
     <title>Deleted!</title>
 </head>
 <body>
-Customer ${custID} terminated successfully.<br />
-<a href="/getAllCustomers">Return to Customer List</a>
+User ${userId} terminated successfully.<br />
+<a href="getAllUsers">Return to User List</a>
 </body>
 </html>

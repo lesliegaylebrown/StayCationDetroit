@@ -8,22 +8,22 @@
 
 <table border="1">
     <tr>
-    <th>CustomerID</th>
-    <th>CompanyName</th>
+    <th>User ID</th>
+
         <th>Delete?</th>
     </tr>
-    <c:forEach items="${cList}" var="item">
+    <c:forEach items="${userList}" var="item">
         <tr>
             <td>
-                ${item.customerID}
+                ${item.userId}
             </td>
             <td>
-                 ${item.companyName}
+                 ${item.fname}
             </td>
             <td>
                 <form action="/deleteCustomer" method="post">
                     <input type="hidden" name="CustomerID"
-                           value="${item.customerID}">
+                           value="${item.userId}">
                     <input type="submit" value="Terminate Customer">
                 </form>
 

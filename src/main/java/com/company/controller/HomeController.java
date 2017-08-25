@@ -29,6 +29,10 @@ public class HomeController {
         return "userForm";
     }
 
+//    *****************************************
+//
+
+
     //handle the submit of the customer form
     @RequestMapping(value = "/addUser")
     public ModelAndView addCustomer (
@@ -58,6 +62,8 @@ public class HomeController {
 
         return mv;
     }
+
+
     @RequestMapping(value = "buildings")
     public ModelAndView buildings(){
         return new ModelAndView("buildings");

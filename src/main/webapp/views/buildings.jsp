@@ -31,7 +31,7 @@
     <a href="buildings.jsp">
      <img src="resources/buildings/Dacext.jpg" alt="Detroit Athletic Club"style="width: 188px;height: 88px;border:0;">
     </a>
-</div>
+<%--</div>--%>
     <a href="buildings.jsp">
      <img src="resources/buildings/Maccabeesint.jpg" alt="Maccabees Building" style="width: 188px;height: 88px;border: 0;">
     </a>

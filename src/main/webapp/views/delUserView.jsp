@@ -20,6 +20,19 @@
             <td>
                  ${item.fname}
             </td>
+
+            <td>
+                    ${item.userId}
+            </td>
+            <td>
+                    ${item.fname}
+            </td>
+            <td>
+                    ${item.userId}
+            </td>
+            <td>
+                    ${item.fname}
+            </td>
             <td>
                 <form action="deleteUser" method="post">
                     <input type="hidden" name="userId"

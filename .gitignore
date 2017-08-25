@@ -26,4 +26,7 @@ hibernate.cfg.xml
 
 \#here we would ignore our DBCredentials file too
 \#commented out for class though
-\#DBCredentials.java
+DBCredentials.java
+
+DAO.java
+APICredentials.java

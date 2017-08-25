@@ -11,7 +11,7 @@
     <title>Deleted!</title>
 </head>
 <body>
-User ${userId} terminated successfully.<br />
+User ${userId} terminated successfully.<br>
 <a href="getAllUsers">Return to User List</a>
 </body>
 </html>

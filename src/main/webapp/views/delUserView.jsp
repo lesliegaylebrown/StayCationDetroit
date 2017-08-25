@@ -21,10 +21,10 @@
                  ${item.fname}
             </td>
             <td>
-                <form action="/deleteCustomer" method="post">
-                    <input type="hidden" name="CustomerID"
+                <form action="deleteUser" method="post">
+                    <input type="hidden" name="userId"
                            value="${item.userId}">
-                    <input type="submit" value="Terminate Customer">
+                    <input type="submit" value="Terminate User">
                 </form>
 
             </td>

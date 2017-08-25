@@ -16,11 +16,11 @@ Welcome to StayCation: Detroit Qline Edition
 <br/>
 <a href="userForm"><button> Register</button></a>
 <a href="buildings"><button>Buildings</button></a>
-<a href="viewUsers"><button>View Users</button></a>
+<a href="deletedUserResult.jsp"><button>View Users</button></a>
 <a href="deleteUser"><button>Delete Account</button></a>
-<a href="userLogin"><button>Login</button></a>
-<%--<a href="buildings"><button>Buildings</button></a>--%>
-<%--<a href="buildings"><button>Buildings</button></a>--%>
+<a href="userLogin.jsp"><button>Login</button></a>
+<a href="deleteUser"><button>Delete uUser</button></a>
+<a href="addUserResult.jsp"><button>Buildings</button></a>
 <%--<a href="buildings"><button>Buildings</button></a>--%>
 <%--<a href="buildings"><button>Buildings</button></a>--%>
 <%--<a href="buildings"><button>Buildings</button></a>--%>

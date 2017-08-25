@@ -4,7 +4,6 @@ import com.company.controller.User;
 import com.company.controller.User;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by peter on 8/16/17.
  */
+
 public class DAO {
     public static ArrayList<User> getUserList() {
         // define the data for the connection
@@ -39,7 +39,7 @@ public class DAO {
             Statement readUsers = mysqlConnection.createStatement();// creates the statement
 
             ResultSet results = readUsers.executeQuery(readUserCommand);// executes the statement
-            // array list of customers
+            // array list of users
             ArrayList<User> userList = new ArrayList<User>();
 
             // map from the ResultSet to the ArrayList
@@ -91,16 +91,16 @@ public class DAO {
             Statement st = mysqlConnection.createStatement();// creates the statement
 
             int result = st.executeUpdate(addUserCommand);// executes the statement
-            // array list of customers
+            // array list of users
 
-            //if (result == 1)
+           if (result == 1)
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
-            return false; //null result indicates an issue
-        }
-    }
+             //null result indicates an issue
+        }return false;
 
+}
     public static boolean deleteUser(String userId) {
 
         try {
@@ -120,7 +120,7 @@ public class DAO {
             Statement st = mysqlConnection.createStatement();// creates the statement
 
             int result = st.executeUpdate(deleteUserCommand);// executes the statement
-            // array list of customers
+            // array list of users
 
             //if (result == 1)
             return true;

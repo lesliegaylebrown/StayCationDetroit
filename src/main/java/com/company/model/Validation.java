@@ -8,6 +8,7 @@ import java.util.Scanner;
 /**
  * Created by marcking2 on 8/22/17.
  */
+
 public class Validation {
     Scanner scnr = new Scanner(System.in);
 
@@ -48,9 +49,12 @@ public class Validation {
             x = false;
         } else {
 
+            StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
+
+            String passEncrypted = enc.encryptPassword(password);
+
             x = true;
         }
-
 
         return x;
     }

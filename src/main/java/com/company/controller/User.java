@@ -63,14 +63,14 @@ public User()
     fName="";
 
 }
-    public User(String uid,String fN, String lN, String eM, String cP, String pw)
+    public User(String userId,String fName, String lName, String email, String cPhone, String password)
     {
-        userId=uid;
-        fName=fN;
-        lName= lN;
-        email= eM;
-        cPhone=cP;
-        password= pw;
+        this.userId=userId;
+        this.fName=fName;
+        this.lName= lName;
+        this.email= email;
+        this.cPhone=cPhone;
+        this.password= password;
     }
 
 }

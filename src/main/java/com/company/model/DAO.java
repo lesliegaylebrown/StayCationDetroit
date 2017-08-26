@@ -108,7 +108,7 @@ public class DAO {
             String password
 
     ) {
-        System.out.println("LOGIN: DAO---" + userId + "\n" + password);
+
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -189,5 +189,4 @@ public class DAO {
             return false; //null result indicates an issue
         }
     }
-
 }

@@ -6,9 +6,9 @@
 </head>
 <body>
     Added User:<br>
-    ${userId}<br />
-    ${fName}<br />
-    ${lName}<br />
-    ${email}<br />
+    ${UserId}<br />
+    ${LastName}<br />
+    ${CellPhone}<br />
+    ${Email}<br />
 </body>
 </html>

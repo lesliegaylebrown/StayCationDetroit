@@ -14,6 +14,6 @@
     Password: <input name="password" type="password" /><br />
     Re-Enter Password: <input name="password2" type="password" /><br />
     <input type="submit" value="Add User" />
-</form>
+</form>After completing your registration, you will be sent to the login screen.
 </body>
 </html>

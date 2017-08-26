@@ -1,6 +1,6 @@
 package com.company.controller;
 
-<<<<<<< HEAD
+
 
 import com.company.model.APICredentials;
 import com.company.model.DAO;
@@ -14,10 +14,10 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONArray;
 import org.json.JSONObject;
-=======
+
 import com.company.model.DAO;
 import org.jasypt.util.password.StrongPasswordEncryptor;
->>>>>>> 20a51ebfdf5a1f33a668d104e202e36eceeeb10a
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -117,7 +117,7 @@ public class HomeController {
         return "/views/deletedUserResult";
     }
 
-<<<<<<< HEAD
+
 
 
     @RequestMapping("/restaurant")
@@ -190,10 +190,10 @@ public class HomeController {
         return null;
 
     }
-}
 
 
-=======
+
+
     @RequestMapping(value = "login")
     public String login() {
         //if a controller method returns just a String
@@ -239,4 +239,4 @@ public class HomeController {
         return mv;
     }
 }
->>>>>>> 20a51ebfdf5a1f33a668d104e202e36eceeeb10a
+

@@ -9,9 +9,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-/**
- * Created by peter on 8/16/17.
- */
 
 public class DAO {
 

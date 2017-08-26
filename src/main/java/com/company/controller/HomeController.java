@@ -27,11 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * Created by kamel on 7/13/2016
- * and Peter on 8/15/2017
- * JAVA DREAM TEAM
- */
+
 @Controller
 public class HomeController {
     @RequestMapping(value = "/")
@@ -64,9 +60,9 @@ public class HomeController {
 
         //add the info to DB through DAO
         boolean result = DAO.addUser(userId, fName, lName, email, cPhone, password);
-        //best to check the result
+        //check the result
         if (!result) {
-            //still have to write this view
+
             return new ModelAndView("error", "errmsg", "user add failed");
         }
 

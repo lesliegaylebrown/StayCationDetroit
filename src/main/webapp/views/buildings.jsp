@@ -48,6 +48,7 @@
     </a>
 </div>
 
+
 <div>
     <a href="buildresponse">
         <button>Building</button>
@@ -91,5 +92,9 @@
              style="width: 188px;height: 88px;border: 0;">
     </a>
 </div>
+
+
+    <br><br><br><a href="/"><button>Home Page</button></a>
+
 </body>
 </html>

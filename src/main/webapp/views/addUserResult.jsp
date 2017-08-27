@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: peter
-  Date: 8/16/17
-  Time: 1:49 PM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -12,9 +6,13 @@
 </head>
 <body>
     Added User:<br>
-    ${userId}<br />
-    ${fName}<br />
-    ${lName}<br />
-    ${email}<br />
+    User ID: ${UserId}<br />
+    Name: ${FirstName} ${LastName}<br />
+    Phone Number: ${CellPhone}<br />
+    Email address: ${Email}<br /><br>
+
+
+    <a href="login"><button>Login</button></a>
+
 </body>
 </html>

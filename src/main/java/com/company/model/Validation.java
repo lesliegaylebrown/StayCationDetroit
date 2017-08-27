@@ -17,7 +17,7 @@ public class Validation {
         return (userId.matches("^[a-zA-Z_0-9'`]{3,12}$"));
     }
 
-    public static boolean validateEntry(String input) { //validates name Strings up to 35 chars Mr. or Mrs. Wolfeschlegelsteinhausenbergerdorff want to register,
+    public static boolean validateEntry(String input) { //validates name Strings up to 35 chars in case Mr. or Mrs. Wolfeschlegelsteinhausenbergerdorff want to register,
         //I mean, lets not get crazy here.
 
         return (input.matches("^[a-zA-Z_0-9'`]{1,35}$"));

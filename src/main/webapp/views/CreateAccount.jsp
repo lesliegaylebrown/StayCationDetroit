@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: peter
-  Date: 8/16/17
-  Time: 1:39 PM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -20,6 +14,6 @@
     Password: <input name="password" type="password" /><br />
     Re-Enter Password: <input name="password2" type="password" /><br />
     <input type="submit" value="Add User" />
-</form>
+</form>After completing your registration, you will be sent to the login screen.
 </body>
 </html>

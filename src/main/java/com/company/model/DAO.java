@@ -9,9 +9,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-/**
- * Created by peter on 8/16/17.
- */
 
 public class DAO {
 
@@ -111,7 +108,7 @@ public class DAO {
             String password
 
     ) {
-        System.out.println("LOGIN: DAO---" + userId + "\n" + password);
+
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -146,16 +143,6 @@ public class DAO {
             }
 
             return false;
-//            boolean match = enc.checkPassword(password, passEncrypted);
-//            //if the return value of checkPassword is true,
-//            //return the view with info filled in
-//            if (match) {
-//                System.out.println("The password match; you are logged in");
-//            } else {//if it's false, return a log in again view
-//                System.out.println("Mismatch--please try again");
-//            }
-//
-//            System.out.println("POST DB PASSWORD");
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -192,5 +179,4 @@ public class DAO {
             return false; //null result indicates an issue
         }
     }
-
 }

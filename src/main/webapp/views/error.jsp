@@ -1,18 +1,16 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: peter
-  Date: 8/16/17
-  Time: 2:11 PM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Error Page</title>
 </head>
 <body>
-<h1>YOU SUCK</h1>
+<h1>There was a problem.</h1>
 What went wrong: <br />
 ${errmsg}
+<br><br>
+
+<a href="login"><button>Login</button></a>
+<a href="CreateAccount"><button> Register</button></a>
 </body>
 </html>

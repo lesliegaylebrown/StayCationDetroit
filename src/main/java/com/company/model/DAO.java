@@ -143,16 +143,6 @@ public class DAO {
             }
 
             return false;
-//            boolean match = enc.checkPassword(password, passEncrypted);
-//            //if the return value of checkPassword is true,
-//            //return the view with info filled in
-//            if (match) {
-//                System.out.println("The password match; you are logged in");
-//            } else {//if it's false, return a log in again view
-//                System.out.println("Mismatch--please try again");
-//            }
-//
-//            System.out.println("POST DB PASSWORD");
 
         } catch (Exception ex) {
             ex.printStackTrace();

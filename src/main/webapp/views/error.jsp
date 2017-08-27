@@ -5,8 +5,12 @@
     <title>Error Page</title>
 </head>
 <body>
-<h1>YOU SUCK</h1>
+<h1>There was a problem.</h1>
 What went wrong: <br />
 ${errmsg}
+<br><br>
+
+<a href="login"><button>Login</button></a>
+<a href="CreateAccount"><button> Register</button></a>
 </body>
 </html>

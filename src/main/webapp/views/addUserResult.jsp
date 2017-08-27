@@ -6,9 +6,13 @@
 </head>
 <body>
     Added User:<br>
-    ${UserId}<br />
-    ${LastName}<br />
-    ${CellPhone}<br />
-    ${Email}<br />
+    User ID: ${UserId}<br />
+    Name: ${FirstName} ${LastName}<br />
+    Phone Number: ${CellPhone}<br />
+    Email address: ${Email}<br /><br>
+
+
+    <a href="login"><button>Login</button></a>
+
 </body>
 </html>

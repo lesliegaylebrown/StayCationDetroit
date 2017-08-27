@@ -19,5 +19,7 @@ Average Cost For 2: ${rest1AvgCst}<br/>
 <%--${rest}<br/>--%>
 <%--${rest2}<br/>--%>
 <%--${rest3}--%>
+
+<br><br><br><a href="/"><button>Home Page</button></a>
 </body>
 </html>

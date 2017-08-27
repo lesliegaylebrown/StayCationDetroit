@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-    <title>Delete User</title>
+    <title>Building Selection</title>
 </head>
 <body>
 
@@ -15,7 +15,11 @@
     <c:forEach items="${buildingList}" var="item">
         <tr>
             <td>
-                  ${item.buildingName}
+                  ${item.buildingImage}
+            </td>
+
+            <td>
+                    ${item.buildingName}
             </td>
 
             <td>
@@ -23,17 +27,13 @@
             </td>
 
             <td>
-                  ${item.buildingDescription}
+                    ${item.buildingDescription}
             </td>
 
             <td>
-                  ${item.buildingImage}
-            </td>
-
-            <td>
-                <form action="deleteUser" method="post">
+                <form action="delUserView" method="post">
                     <input type="hidden" name="userId"
-                           value="${item.userId}">
+                           value="${item.buildingName}">
                     <input type="submit" value="Delete User">
                 </form>
 

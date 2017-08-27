@@ -61,6 +61,55 @@ public class DAO {
         }
     }
 
+
+    public static ArrayList<Building> getBuildingList() {
+        // define the data for the connection
+        //connection info was pulled out into DBCredentials
+        //so that file can be hidden
+
+        try {
+            // Load driver
+            Class.forName("com.mysql.jdbc.Driver");
+            // DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+
+            // create the db connection object
+            Connection mysqlConnection;
+            mysqlConnection = DriverManager.getConnection(
+                    DBCredentials.DB_ADDRESS,
+                    DBCredentials.USERNAME,
+                    DBCredentials.PASSWORD);
+
+            // create the db statement
+
+            String readBuildingCommand = "select buildingId,  buildingName,  buildingAddress,  buildingDescription,  buildingImage,  qLineStops from architecture";
+
+            Statement readBuilding = mysqlConnection.createStatement();// creates the statement
+
+            ResultSet results = readBuilding.executeQuery(readBuildingCommand);// executes the statement
+            // array list of Buildings
+            ArrayList<Building> buildingList = new ArrayList<Building>();
+
+            // map from the ResultSet to the ArrayList
+            while (results.next()) {
+                Building temp = new Building(results.getString(1),
+                        results.getString(2), results.getString(3),
+                        results.getString(4), results.getString(5), results.getString(6));
+                buildingList.add(temp);
+
+            }
+            for (Building i:buildingList
+                    ) {
+                System.out.println(i);
+            }
+
+            return buildingList;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null; //null result indicates an issue
+        }
+    }
+
+
     public static boolean addUser(
             String userId,
             String fName,

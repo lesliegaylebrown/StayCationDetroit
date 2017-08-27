@@ -1,8 +1,7 @@
 package com.company.controller;
 
-
-
 import com.company.model.APICredentials;
+import com.company.model.Building;
 import com.company.model.DAO;
 
 import org.apache.http.HttpResponse;
@@ -26,8 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
-
-
 
 @Controller
 public class HomeController {
@@ -53,8 +50,6 @@ public class HomeController {
         @RequestParam("Cphone") String cPhone,
         @RequestParam("password") String password
         ) {
-
-
 
         StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
 
@@ -86,6 +81,8 @@ public class HomeController {
         return new ModelAndView("buildings");
         }
 
+
+
     @RequestMapping(value = "getAllUsers")
     public ModelAndView getAllUsers() {
         ArrayList<User> userList = DAO.getUserList();
@@ -96,6 +93,18 @@ public class HomeController {
         }
 
         return new ModelAndView("delUserView","uList",userList);
+    }
+
+    @RequestMapping(value = "getAllBuildings")
+    public ModelAndView getAllBuildings() {
+        ArrayList<Building> buildingList = DAO.getBuildingList();
+
+        //TODO: make error.jsp
+        if (buildingList == null) {
+            return new ModelAndView("error", "errmsg", "Building list is null");
+        }
+
+        return new ModelAndView("buildingView","buildingList",buildingList);
     }
 
     @RequestMapping("deleteUser")
@@ -174,10 +183,7 @@ public class HomeController {
             mv.addObject("rest2Cuis",rest1Cuis);
             mv.addObject("rest2AvgCst",rest1AvgCst);
 
-
-
             return mv;
-
 
         } catch (IOException e) {
             e.printStackTrace();

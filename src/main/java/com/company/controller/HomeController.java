@@ -2,6 +2,7 @@ package com.company.controller;
 
 
 import com.company.model.DAO;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,8 @@ import java.util.ArrayList;
 public class HomeController {
     @RequestMapping(value = "/")
     public String Home() {
-        return "Welcome";// or views/test
+
+        return "index";// or views/test
     }
 
     @RequestMapping(value = "/userForm")
@@ -29,6 +31,7 @@ public class HomeController {
         return "userForm";
     }
 
+
     //handle the submit of the customer form
     @RequestMapping(value = "/addUser")
     public ModelAndView addCustomer(
@@ -36,16 +39,24 @@ public class HomeController {
             @RequestParam("fName") String fName,
             @RequestParam("lName") String lName,
             @RequestParam("email") String email,
-            @RequestParam("Cphone") String cPhone,
+            @RequestParam("cphone") String cPhone,
             @RequestParam("password") String password
-    ) {
+    )
+    {
+        {
+            StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
+            String passEncryted = enc.encryptPassword(password);
+
+            password = passEncryted;
+
+        }
 
         //add the info to DB through DAO
         boolean result = DAO.addUser(userId, fName, lName, email, cPhone, password);
         //best to check the result
-        if (result == false) {
+        if (!result) {
             //still have to write this view
-            return new ModelAndView("error", "errmsg", "customer add failed");
+            return new ModelAndView("error", "errmsg", "user login failed");
         }
 
         ModelAndView mv = new ModelAndView("addUserResult");
@@ -58,6 +69,56 @@ public class HomeController {
 
         return mv;
     }
+
+    @RequestMapping(value = "getAllUsers")
+    public ModelAndView getAllUsers(){
+        ArrayList<User> userList = DAO.getUserList();
+
+        //TODO make error.jsp
+        if (userList == null){
+            return new ModelAndView("error", "errmsg","User list is null");
+        }
+        return new ModelAndView("delUserView","uList","userList");
+    }
+    @RequestMapping(value = "deleteUser")
+    public String deleteUser (Model model,@RequestParam("userId")String userId){
+
+        //make it happen at the DB
+        boolean result = DAO.deleteUser(userId);
+
+        if (!result){
+            model.addAttribute("errmsg", "Delete failed");
+            return "error";
+        }
+
+        // adding info without a ModelAndView
+        //get the model as an argument above
+        // and add to it
+        model.addAttribute("userId", userId);
+        return "/views/deletedUserResult";
+    }
+    @RequestMapping(value = "login")
+    public String login() {
+        // if a controller method returns just a String
+        // Spring MVC know's it is a view name
+        return "userLogin";
+    }
+    /*@RequestMapping(value = "/checklogin")
+     public ModelAndView login(
+             @RequestParam("userId")
+             String userId,
+             @RequestParam("password")
+             String password
+    ) {
+        //add the info to DB through DAO
+        boolean result = DAO.login(userId, password);
+
+        //best to check the result
+        if (!result) {
+            //still have to write this view
+            return new ModelAndView("error", "errmsg", "user login failed");
+        }
+    */
 
 
 
@@ -95,33 +156,9 @@ public class HomeController {
     public ModelAndView buildresponse(){ return new ModelAndView("buildresponse");
     }
 
-    @RequestMapping(value = "getAllUsers")
-    public ModelAndView getAllUsers() {
-        ArrayList<User> userList = DAO.getUserList();
 
-        //TODO: make error.jsp
-        if (userList == null) {
-            return new ModelAndView("error", "errmsg", "Customer list is null");
-        }
 
-        return new ModelAndView("delUserView", "uList", userList);
+
+
+
     }
-
-    @RequestMapping("/deleteUser")
-    public String deleteUser(
-            Model model,
-            @RequestParam("userId") String userId) {
-        //make it happen with the DB
-        boolean result = DAO.deleteUser(userId);
-
-        if (result == false) {
-            model.addAttribute("errmsg", "Delete failed");
-            return "error";
-        }
-        //adding info without a ModelAndView
-        //get the model as a argument above
-        //and add to it
-        model.addAttribute("userId", userId);
-        return "viewUsers";
-    }
-}

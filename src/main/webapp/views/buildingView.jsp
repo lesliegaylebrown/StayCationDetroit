@@ -8,17 +8,26 @@
 
 <table border="1">
     <tr>
-    <th>User ID</th>
+    <th>Building Name</th>
 
-        <th>Delete?</th>
+        <th>???</th>
     </tr>
-    <c:forEach items="${uList}" var="item">
+    <c:forEach items="${buildingList}" var="item">
         <tr>
             <td>
-                ${item.userId}
+                  ${item.buildingName}
             </td>
+
             <td>
-                 ${item.fName}
+                  ${item.buildingAddress}
+            </td>
+
+            <td>
+                  ${item.buildingDescription}
+            </td>
+
+            <td>
+                  ${item.buildingImage}
             </td>
 
             <td>

@@ -53,6 +53,9 @@ public class HomeController {
         @RequestParam("Cphone") String cPhone,
         @RequestParam("password") String password
         ) {
+
+
+
         StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
 
         String passEncrypted = enc.encryptPassword(password);
@@ -110,7 +113,7 @@ public class HomeController {
         //get the model as a argument above
         //and add to it
         model.addAttribute("userId", userId);
-        return "/views/deletedUserResult";
+        return "deletedUserResult";
     }
 
     @RequestMapping("/restaurant")
@@ -143,6 +146,7 @@ public class HomeController {
             String rest1AvgCst = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
                     ("average_cost_for_two");
             String rest2 = json.getJSONArray("nearby_restaurants").getJSONObject(0).toString();
+
             JSONArray rest3 = json.getJSONArray("nearby_restaurants");
 
             String rest2N = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString

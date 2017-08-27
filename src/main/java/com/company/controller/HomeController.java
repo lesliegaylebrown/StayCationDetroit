@@ -53,8 +53,6 @@ public class HomeController {
         @RequestParam("Cphone") String cPhone,
         @RequestParam("password") String password
         ) {
-
-
         StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
 
         String passEncrypted = enc.encryptPassword(password);

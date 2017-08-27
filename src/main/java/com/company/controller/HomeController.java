@@ -25,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.servlet.http.HttpSession;
+
 
 
 @Controller
@@ -44,13 +46,15 @@ public class HomeController {
     //handle the submit of the user form
     @RequestMapping(value = "/addUser")
     public ModelAndView addUser (
-            @RequestParam("userId") String userId,
-            @RequestParam("fName") String fName,
+        @RequestParam("userId") String userId,
+        @RequestParam("fName") String fName,
         @RequestParam("lName") String lName,
         @RequestParam("email") String email,
         @RequestParam("Cphone") String cPhone,
         @RequestParam("password") String password
         ) {
+
+
         StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
 
         String passEncrypted = enc.encryptPassword(password);
@@ -110,9 +114,6 @@ public class HomeController {
         model.addAttribute("userId", userId);
         return "/views/deletedUserResult";
     }
-
-
-
 
     @RequestMapping("/restaurant")
     public ModelAndView Restaurants() {
@@ -213,6 +214,24 @@ public class HomeController {
 
         ModelAndView mv = new ModelAndView("/buildings");
 
+        return mv;
+    }
+
+    @RequestMapping("/loginsubmit")
+    public ModelAndView loginsubmit (
+            @RequestParam("name") String fname,
+            HttpSession session
+    ) {
+        fname = fname.trim();
+        if (fname == null || fname.length() == 0) {
+            return new ModelAndView("error", "errmsg",
+                    "Name cannot be blank");
+        }
+
+        session.setAttribute("loginStatus", "Logged In");
+        session.setAttribute("username", fname);
+
+        ModelAndView mv = new ModelAndView("loginsuccess");
         return mv;
     }
 }

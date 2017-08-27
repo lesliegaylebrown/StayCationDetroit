@@ -6,16 +6,15 @@
 </head>
 <body>
 <center><h1>Welcome to StayCation: Detroit Qline Edition</h1></center>
-<br/>
-<br/>
+<br/><br/>
+
 <center><a href="CreateAccount"><button> Register</button></a></center>
 <center><a href="login"><button>Login</button></a></center>
 <a href="buildings"><button>Buildings</button></a>
-<a href="deletedUserResult"><button>View Users</button></a>
+<a href="/getAllUsers"><button>View Users</button></a>
 <a href="deleteUser"><button>Delete Account</button></a>
-<a href="addUserResult"><button>Added User Confirmation</button></a>
 <a href="restaurant"><button>Restaurants</button></a>
 <a href="/"><button>Home Page</button></a>
-<a href="buildings"><button>TBD</button></a>
+
 </body>
 </html>

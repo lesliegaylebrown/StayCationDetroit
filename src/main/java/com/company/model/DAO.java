@@ -49,6 +49,10 @@ public class DAO {
                 userList.add(temp);
 
             }
+            for (User i:userList
+                 ) {
+                System.out.println(i);
+            }
 
             return userList;
         } catch (Exception ex) {
@@ -119,7 +123,7 @@ public class DAO {
                     DBCredentials.USERNAME,
                     DBCredentials.PASSWORD);
 
-            String readUserCommand = "select userId,fname, lname, email, cellphone, password from users where userId='"
+            String readUserCommand = "select userId, fname, lname, email, cellphone, password from users where userId='"
             + userId + "'";
 
             Statement readUsers = mysqlConnection.createStatement();// creates the statement

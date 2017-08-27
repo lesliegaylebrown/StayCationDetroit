@@ -2,6 +2,34 @@ package com.company.controller;
 
 
 public class User {
+
+
+    private String userId;
+    private String fName;
+    private String lName;
+    private String email;
+    private String cPhone;
+    private String password;
+
+    public User() {
+        userId = "";
+        fName = "";
+        lName = "";
+        email = "";
+        cPhone = "";
+        password = "";
+
+    }
+
+    public User(String userId, String fName, String lName, String email, String cPhone, String password) {
+        this.userId = userId;
+        this.fName = fName;
+        this.lName = lName;
+        this.email = email;
+        this.cPhone = cPhone;
+        this.password = password;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -50,27 +78,12 @@ public class User {
         this.password = password;
     }
 
-    private String userId;
-    private String fName;
-    private String lName;
-    private String email;
-    private String cPhone;
-    private String password;
+    public String toString() {
 
-public User()
-{
-    userId="";
-    fName="";
+        String result = "";
 
-}
-    public User(String userId,String fName, String lName, String email, String cPhone, String password)
-    {
-        this.userId=userId;
-        this.fName=fName;
-        this.lName= lName;
-        this.email= email;
-        this.cPhone=cPhone;
-        this.password= password;
+        System.out.printf("%-12s%-12s%-12s%-12s%-12s%-12s", userId, fName, lName, email, cPhone, password);
+        return result;
     }
 
 }

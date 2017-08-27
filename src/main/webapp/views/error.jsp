@@ -12,5 +12,6 @@ ${errmsg}
 
 <a href="login"><button>Login</button></a>
 <a href="CreateAccount"><button> Register</button></a>
+<a href="/"><button>Home Page</button></a>
 </body>
 </html>

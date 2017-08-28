@@ -1,5 +1,6 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
     <title>Eateries</title>
@@ -8,12 +9,45 @@
 
 Restaurants near ${BuildingChoice}<br><br>
 
-${rest1N}<br/>
-${rest1L}<br/>
-${rest1Cuis}<br/>
-Average Cost For 2: ${rest1AvgCst}<br/>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Cuisine</th>
+        <th>Avg Cost For Two</th>
+        <th>Web Link</th>
 
-<a href="${rest1U}">link </a> <br/>
+    </tr>
+    <c:forEach items = "${rList}" var="restaurant">
+        <tr>
+
+            <td>
+                    ${restaurant.restName}
+            </td>
+            <td>
+                    ${restaurant.restLoc}
+            </td>
+            <td>
+                    ${restaurant.restCuisines}
+            </td>
+            <td>
+                    ${restaurant.restAvgCost}
+            </td>
+            <td>
+                <a href=    "${restaurant.restUrl}">View Website</a>
+            </td>
+        </tr>
+    </c:forEach>
+
+</table>
+
+
+<%--${rest1N}<br/>--%>
+<%--${rest1L}<br/>--%>
+<%--${rest1Cuis}<br/>--%>
+<%--Average Cost For 2: ${rest1AvgCst}<br/>--%>
+
+<%--<a href="${rest1U}">link </a> <br/>--%>
 
 
 

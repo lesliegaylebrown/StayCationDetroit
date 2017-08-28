@@ -8,18 +8,20 @@
 
 <table border="1">
     <tr>
-    <th>Building Name</th>
+    <th>Building Image</th>
 
-        <th>???</th>
+        <th>Building Name</th><th>Building Address</th><th>Building Description</th><th>Select</th>
     </tr>
     <c:forEach items="${buildingList}" var="item">
         <tr>
             <td>
-                  ${item.buildingImage}
+
+            <img src="resources/buildings/${item.buildingImage}" alt="${item.buildingName}"height = 150px >
+
             </td>
 
             <td>
-                    ${item.buildingName}
+                  ${item.buildingName}
             </td>
 
             <td>
@@ -27,12 +29,12 @@
             </td>
 
             <td>
-                    ${item.buildingDescription}
+                  ${item.buildingDescription}
             </td>
 
             <td>
                 <form action="restaurant" method="post">
-                    <input type="text" name="BuildingChoice"
+                    <input type="hidden" name="BuildingChoice"
                            value="${item.buildingName}">
                     <input type="submit" value="Choose">
                 </form>

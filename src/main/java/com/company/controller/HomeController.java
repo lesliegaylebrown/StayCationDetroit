@@ -1,10 +1,7 @@
 package com.company.controller;
 
-import com.company.model.APICredentials;
-import com.company.model.Building;
-import com.company.model.DAO;
+import com.company.model.*;
 
-import com.company.model.Validation;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -25,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.jws.WebParam;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -103,23 +101,6 @@ public class HomeController {
         return mv;
     }
 
-    @RequestMapping(value = "buildings")
-    public ModelAndView buildings (
-            @RequestParam("BuildingChoice") String buildingChoice)
-
-
-    { ModelAndView mv = new ModelAndView("");
-        mv.addObject("BuildingChoice", buildingChoice);
-
-
-        return mv;}
-
-
-    public ModelAndView buildings(){
-        return new ModelAndView("buildings");
-        }
-
-
 
     @RequestMapping(value = "getAllUsers")
     public ModelAndView getAllUsers() {
@@ -164,7 +145,7 @@ public class HomeController {
     }
 
     @RequestMapping("/restaurant")
-    public ModelAndView Restaurants() {
+    public ModelAndView Restaurants(@RequestParam("BuildingChoice")String BuildingChoice) {
         try {
             System.out.println("Entered restaurant controller");
             HttpClient http = HttpClientBuilder.create().build();
@@ -175,51 +156,34 @@ public class HomeController {
 
             HttpResponse resp = http.execute(getPage);
 
-
             String jsonString = EntityUtils.toString(resp.getEntity());
 
             //turn it unto java actual JSON object
 
             JSONObject json = new JSONObject(jsonString);
 
-            String rest1N = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
-                    ("name");
-            String rest1U = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
-                    ("url");
-            String rest1L = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getJSONObject("location").getString
-                    ("address");
-            String rest1Cuis = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
-                    ("cuisines");
-            String rest1AvgCst = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
-                    ("average_cost_for_two");
-            String rest2 = json.getJSONArray("nearby_restaurants").getJSONObject(0).toString();
+//for(int i = 10;i > 0; i--) {
 
-            JSONArray rest3 = json.getJSONArray("nearby_restaurants");
+    String rest1N = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString ("name");
+    String rest1U = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString ("url");
+    String rest1L = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getJSONObject("location").getString ("address");
+    String rest1Cuis = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString ("cuisines");
+    String rest1AvgCst = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString ("average_cost_for_two");
 
-            String rest2N = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
-                    ("name");
-            String rest2U = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
-                    ("url");
-            String rest2L = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getJSONObject("location").getString
-                    ("address");
-            String rest2Cuis = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
-                    ("cuisines");
-            String rest2AvgCst = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
-                    ("average_cost_for_two");
+    ModelAndView mv = new ModelAndView("Restaurants");
+    mv.addObject("JSONstring", json.toString());
+    mv.addObject("rest1N", rest1N);
+    mv.addObject("rest1U", rest1U);
+    mv.addObject("rest1L", rest1L);
+    mv.addObject("rest1Cuis", rest1Cuis);
+    mv.addObject("rest1AvgCst", rest1AvgCst);
 
-            ModelAndView mv = new ModelAndView("Restaurants");
-            mv.addObject("JSONstring", json.toString());
-            mv.addObject("rest1N",rest1N);
-            mv.addObject("rest1U", rest1U);
-            mv.addObject("rest1L", rest1L);
-            mv.addObject("rest1Cuis",rest1Cuis);
-            mv.addObject("rest1AvgCst",rest1AvgCst);
+//    ArrayList<Zomato> zomatoArrayList = new ArrayList<Zomato>();
+//    System.out.println(rest1N, rest1U, rest1L, rest1Cuis, rest1AvgCst);
+//}
+//            ModelAndView mv = new ModelAndView("Restaurants");
 
-            mv.addObject("rest2N",rest1N);
-            mv.addObject("rest2U", rest1U);
-            mv.addObject("rest2L", rest1L);
-            mv.addObject("rest2Cuis",rest1Cuis);
-            mv.addObject("rest2AvgCst",rest1AvgCst);
+    mv.addObject("BuildingChoice",BuildingChoice);
 
             return mv;
 
@@ -240,7 +204,6 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/checklogin")
-
     public ModelAndView login (
             @RequestParam("userId")
                     String userId,
@@ -258,27 +221,31 @@ public class HomeController {
             return new ModelAndView("error", "errmsg", "User Login Failed");
         }
 
-        ModelAndView mv = new ModelAndView("/buildings");
+        ModelAndView mv = new ModelAndView("Welcome");
 
         return mv;
+
     }
 
-    @RequestMapping("/loginsubmit")
-    public ModelAndView loginsubmit (
-            @RequestParam("name") String fname,
-            HttpSession session
-    ) {
-        fname = fname.trim();
-        if (fname == null || fname.length() == 0) {
-            return new ModelAndView("error", "errmsg",
-                    "Name cannot be blank");
-        }
 
-        session.setAttribute("loginStatus", "Logged In");
-        session.setAttribute("username", fname);
-
-        ModelAndView mv = new ModelAndView("loginsuccess");
-        return mv;
     }
-}
+
+//    @RequestMapping("/loginsubmit")
+//    public ModelAndView loginsubmit (
+//            @RequestParam("name") String fname,
+//            HttpSession session
+//    ) {
+//        fname = fname.trim();
+//        if (fname == null || fname.length() == 0) {
+//            return new ModelAndView("error", "errmsg",
+//                    "Name cannot be blank");
+//        }
+//
+//        session.setAttribute("loginStatus", "Logged In");
+//        session.setAttribute("username", fname);
+//
+//        ModelAndView mv = new ModelAndView("loginsuccess");
+//        return mv;
+//    }
+
 

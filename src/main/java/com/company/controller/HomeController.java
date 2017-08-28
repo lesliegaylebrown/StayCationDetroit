@@ -21,6 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import javax.jws.WebParam;
 import javax.servlet.http.HttpSession;
@@ -160,24 +164,92 @@ public class HomeController {
             //turn it unto java actual JSON object
 
             JSONObject json = new JSONObject(jsonString);
+//
+//<<<<<<< HEAD
+//            String rest1N = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString("name");
+//            String rest1U = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString("url");
+//            String rest1L = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getJSONObject("location").getString("address");
+//            String rest1Cuis = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString("cuisines");
+//            String rest1AvgCst = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString("average_cost_for_two");
+//
+//            ModelAndView mv = new ModelAndView("Restaurants");
+//            mv.addObject("JSONstring", json.toString());
+//            mv.addObject("rest1N", rest1N);
+//            mv.addObject("rest1U", rest1U);
+//            mv.addObject("rest1L", rest1L);
+//            mv.addObject("rest1Cuis", rest1Cuis);
+//            mv.addObject("rest1AvgCst", rest1AvgCst);
+//
+//            mv.addObject("BuildingChoice", BuildingChoice);
+//
+//            return mv;
+//=======
+            JSONArray rest = json.getJSONArray("nearby_restaurants");
 
-            String rest1N = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString("name");
-            String rest1U = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString("url");
-            String rest1L = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getJSONObject("location").getString("address");
-            String rest1Cuis = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString("cuisines");
-            String rest1AvgCst = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString("average_cost_for_two");
+            ArrayList<Restaurants> restList = new ArrayList<Restaurants>();
+            for (int i = 0; i < rest.length() ; i++) {
 
-            ModelAndView mv = new ModelAndView("Restaurants");
-            mv.addObject("JSONstring", json.toString());
-            mv.addObject("rest1N", rest1N);
-            mv.addObject("rest1U", rest1U);
-            mv.addObject("rest1L", rest1L);
-            mv.addObject("rest1Cuis", rest1Cuis);
-            mv.addObject("rest1AvgCst", rest1AvgCst);
+                String rest1N = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
+                        ("name");
+                String rest1U = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
+                        ("url");
+                String rest1L = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getJSONObject("location").getString
+                        ("address");
+                String rest1Cuis = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
+                        ("cuisines");
+                String rest1AvgCst = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
+                        ("average_cost_for_two");
 
-            mv.addObject("BuildingChoice", BuildingChoice);
+                Restaurants temp = new Restaurants(rest1N, rest1L, rest1Cuis, rest1AvgCst, rest1U);
+                restList.add(temp);
+            }
 
-            return mv;
+
+//            String rest1N = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
+//                    ("name");
+//            String rest1U = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
+//                    ("url");
+//            String rest1L = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getJSONObject("location").getString
+//                    ("address");
+//            String rest1Cuis = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
+//                    ("cuisines");
+//            String rest1AvgCst = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
+//                    ("average_cost_for_two");
+//            String rest2 = json.getJSONArray("nearby_restaurants").getJSONObject(0).toString();
+//
+//            JSONArray rest3 = json.getJSONArray("nearby_restaurants");
+//
+//            String rest2N = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
+//                    ("name");
+//            String rest2U = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
+//                    ("url");
+//            String rest2L = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getJSONObject("location").getString
+//                    ("address");
+//            String rest2Cuis = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
+//                    ("cuisines");
+//            String rest2AvgCst = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
+//                    ("average_cost_for_two");
+//
+//
+//
+//
+//            ModelAndView mv = new ModelAndView("Restaurants");
+//            mv.addObject("JSONstring", json.toString());
+//            mv.addObject("rest1N",rest1N);
+//            mv.addObject("rest1U", rest1U);
+//            mv.addObject("rest1L", rest1L);
+//            mv.addObject("rest1Cuis",rest1Cuis);
+//            mv.addObject("rest1AvgCst",rest1AvgCst);
+//
+//            mv.addObject("rest2N",rest1N);
+//            mv.addObject("rest2U", rest1U);
+//            mv.addObject("rest2L", rest1L);
+//            mv.addObject("rest2Cuis",rest1Cuis);
+//            mv.addObject("rest2AvgCst",rest1AvgCst);
+
+            //return mv;
+            return new ModelAndView("Restaurants", "rList",restList);
+//>>>>>>> 7749416ecf11efe8bdcba1ac5320f313c5608668
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -218,5 +290,10 @@ public class HomeController {
         return mv;
 
     }
+//<<<<<<< HEAD
+//=======
+
 
 }
+//>>>>>>> 7749416ecf11efe8bdcba1ac5320f313c5608668
+

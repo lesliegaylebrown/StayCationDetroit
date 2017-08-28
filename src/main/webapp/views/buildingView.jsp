@@ -31,10 +31,10 @@
             </td>
 
             <td>
-                <form action="delUserView" method="post">
-                    <input type="hidden" name="userId"
+                <form action="restaurant" method="post">
+                    <input type="text" name="BuildingChoice"
                            value="${item.buildingName}">
-                    <input type="submit" value="Delete User">
+                    <input type="submit" value="Choose">
                 </form>
 
             </td>

@@ -4,6 +4,7 @@ import com.company.model.APICredentials;
 import com.company.model.Building;
 import com.company.model.DAO;
 
+import com.company.model.Validation;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -49,7 +50,33 @@ public class HomeController {
         @RequestParam("email") String email,
         @RequestParam("Cphone") String cPhone,
         @RequestParam("password") String password
+
         ) {
+        boolean goodUserid = Validation.validateUserId(userId);
+        if (!goodUserid) {
+            return new ModelAndView("error", "errmsg", "Invalid User ID");
+        }
+        boolean goodfName = Validation.validateEntry(fName);
+        if (!goodfName) {
+            return new ModelAndView("error", "errmsg", "Invalid Name");
+        }
+        boolean goodlName = Validation.validateEntry(lName);
+        if (!goodlName) {
+            return new ModelAndView("error", "errmsg", "Invalid Name");
+        }
+        boolean goodemail = Validation.validateEmail(email);
+        if (!goodemail) {
+            return new ModelAndView("error", "errmsg", "Invalid email");
+        }
+        boolean goodcPhone = Validation.validatePhoneNumber(cPhone);
+        if (!goodcPhone) {
+            return new ModelAndView("error", "errmsg", "Invalid phone number");
+        }
+        String password2 = " ";
+        boolean goodpassword = Validation.validatePassword(password);
+        if (!goodpassword) {
+            return new ModelAndView("error", "errmsg", "Invalid password/match");
+        }
 
         StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
 
@@ -77,6 +104,17 @@ public class HomeController {
     }
 
     @RequestMapping(value = "buildings")
+    public ModelAndView buildings (
+            @RequestParam("BuildingChoice") String buildingChoice)
+
+
+    { ModelAndView mv = new ModelAndView("");
+        mv.addObject("BuildingChoice", buildingChoice);
+
+
+        return mv;}
+
+
     public ModelAndView buildings(){
         return new ModelAndView("buildings");
         }

@@ -125,7 +125,7 @@ public class ValidationTest {
             System.out.print("Re-enter your password: ");
             String password2 = scnr.nextLine();
 
-            boolean userEntry = Validation.validatePassword(password, password2);
+            boolean userEntry = Validation.validatePassword(password/*, password2*/);
 
             if (!userEntry) {
                 System.out.println("Invalid entry\nPlease enter a valid password.");

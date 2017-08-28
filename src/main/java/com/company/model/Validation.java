@@ -35,26 +35,20 @@ public class Validation {
     }
 
 
-    public static boolean validatePassword(String password, String password2) {
+    public static boolean validatePassword(String password/*, String password2*/) {
 
         boolean x = true;
 
-        if (password.matches("(?=.*[a-z])(?=.*d)(?=.*[A-Z])(?=.*[!@#$?.]).{8,64}")) {
-
-            x = true;
-        } else if (!(password.equals(password2))) {
-
-            System.out.println("Passwords don't match.");
+        if (!(password.matches("(?=.*[a-z])(?=.*d)(?=.*[A-Z])(?=.*[!@#$?.]).{8,64}"))) {
 
             x = false;
-        } else {
-
-            StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
-
-            String passEncrypted = enc.encryptPassword(password);
-
-            x = true;
         }
+//        else if (!(password.equals(password2))) {
+//
+//            System.out.println("Passwords don't match.");
+//
+//            x = false;
+//        }
 
         return x;
     }

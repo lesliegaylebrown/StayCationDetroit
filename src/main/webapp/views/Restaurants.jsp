@@ -2,9 +2,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>$Title$</title>
+    <title>Eateries</title>
 </head>
 <body>
+
+Restaurants near ${BuildingChoice}<br><br>
 
 ${rest1N}<br/>
 ${rest1L}<br/>

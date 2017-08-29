@@ -2,6 +2,7 @@ package com.company.controller;
 
 import com.company.model.*;
 
+import com.sun.jndi.toolkit.url.Uri;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -38,6 +39,9 @@ public class HomeController {
         return "index";// or views/test
     }
 
+
+    //    This method takes the onclick request from the index page button "Registration" and calls the page
+//    CreateAccount.jsp
     @RequestMapping(value = "CreateAccount")
     public String CreateAccount() {
         //if a controller method returns just a String
@@ -45,7 +49,8 @@ public class HomeController {
         return "CreateAccount";
     }
 
-    //handle the submit of the user form
+
+    //handle the submit of the user form, user input validation, and user password encryption
     @RequestMapping(value = "/addUser")
     public ModelAndView addUser(
             @RequestParam("userId") String userId,
@@ -56,6 +61,7 @@ public class HomeController {
             @RequestParam("password") String password
 
     ) {
+//        this code calls the validation methods for each registration field
         boolean goodUserid = Validation.validateUserId(userId);
         if (!goodUserid) {
             return new ModelAndView("error", "errmsg", "Invalid User ID");
@@ -81,17 +87,17 @@ public class HomeController {
         if (!goodpassword) {
             return new ModelAndView("error", "errmsg", "Invalid password");
         }
-
+//sends password to method to encrypt using jasypt-StrongPasswordEncryptor
         password = Validation.encryptPassword(password);
 
-        //add the info to DB through DAO
+        //add the info to DBase through DAO (Data Access Object Class)
         boolean result = DAO.addUser(userId, fName, lName, email, cPhone, password);
-        //check the result
+        //check the result, if false sends the error code message from "modelObject:" to error.jsp to view
         if (!result) {
 
             return new ModelAndView("error", "errmsg", "user add failed");
         }
-
+//Creates Expression Language objects that link to the values of the objects below
         ModelAndView mv = new ModelAndView("/addUserResult");
         mv.addObject("UserId", userId);
         mv.addObject("FirstName", fName);
@@ -103,11 +109,14 @@ public class HomeController {
         return mv;
     }
 
+//this is an optional method that allows an admin to delete users,
+// or to allow the user to delete their account using delUserView
+
     @RequestMapping(value = "getAllUsers")
     public ModelAndView getAllUsers() {
         ArrayList<User> userList = DAO.getUserList();
 
-        //TODO: make error.jsp
+
         if (userList == null) {
             return new ModelAndView("error", "errmsg", "User list is null");
         }
@@ -115,42 +124,25 @@ public class HomeController {
         return new ModelAndView("delUserView", "uList", userList);
     }
 
-    @RequestMapping(value = "getAllBuildings")
-    public ModelAndView getAllBuildings()
-    {
 
+//    method to display all buildings etc... from the attractions Dbase
+
+    @RequestMapping(value = "getAllBuildings")
+//
+    public ModelAndView getAllBuildings() {
+
+//        Calls getBuildingList run a SQL query to populate the buildingList for use in buildingView.jsp
         ArrayList<Building> buildingList = DAO.getBuildingList();
 
-
-        //TODO: make error.jsp
         if (buildingList == null) {
             return new ModelAndView("error", "errmsg", "Building list is null");
         }
-
+//sends data for display in the buildingView.jsp as a html table
         return new ModelAndView("buildingView", "buildingList", buildingList);
 
-
     }
-public ModelAndView buildingObjects( @RequestParam("buildingId") String buildingId,
-                                     @RequestParam("buildingName") String buildingName,
-                                     @RequestParam("buildingAddress") String buildingAddress,
-                                     @RequestParam("buildingDescription") String buildingDescription,
-                                     @RequestParam("buildingImage") String buildingImage,
-                                     @RequestParam("qlineStops") String qlineStops,
-                                     @RequestParam("longitude") double longitude,
-                                     @RequestParam("latitude") double latitude){
-        ModelAndView mv = new ModelAndView(" ");
 
-        mv.addObject("buildingId", buildingId);
-        mv.addObject("buildingName", buildingName);
-        mv.addObject("buildingAddress", buildingAddress);
-        mv.addObject("buildingDescription", buildingDescription);
-        mv.addObject("buildingImage", buildingImage);
-        mv.addObject("qlineStops", qlineStops);
-        mv.addObject("longitude", longitude);
-        mv.addObject("latitude", latitude);
-        return mv;}
-
+    //    this method is called as an option to delete users in the getAllUser JSP
     @RequestMapping("deleteUser")
     public String deleteUser(
             Model model,
@@ -170,63 +162,66 @@ public ModelAndView buildingObjects( @RequestParam("buildingId") String building
     }
 
     @RequestMapping("/restaurant")
+//Requests the value of the LatandLon parameter
+    public ModelAndView Restaurants(@RequestParam("LatandLon") String LatandLon
 
+//   Assembles a URI data type by combining String data from the buildingView page
 
-
-        public ModelAndView Restaurants(@RequestParam("LatandLon") String LatandLon
-//    @RequestParam("Long") double Long, @RequestParam("Lat") double Lat
+// satisfies requirement to include an exception for the URI data type
     ) throws URISyntaxException {
-            String latLon = LatandLon;
-            String test1 = "https://developers.zomato.com/api/v2.1/geocode?";
-            String test2 = test1 + latLon;
-            URI myuri = new URI(test2);
+        String latLon = LatandLon;
+        String test1 = "https://developers.zomato.com/api/v2.1/geocode?";
+        String test2 = test1 + latLon;
+        URI myuri = new URI(test2);
 
-            try {
-                System.out.println("Entered restaurant controller");
-                HttpClient http = HttpClientBuilder.create().build();
+        try {
+//              Allows access to JSON file
+            HttpClient http = HttpClientBuilder.create().build();
+//              uses newly created myURI as the address to the JSON/Zomato server
+            HttpGet getPage = new HttpGet(myuri);
+//               used to request access to the JSON/Zomato file
+            getPage.addHeader("accept", "application/json");
+//                sends the provided API key to the JSON/Zomato server, the Key is hidden in the
+//                APICredentials this file is listed on the .gitignore file to be excluded from the github repository
+            getPage.addHeader("user-key", APICredentials.API_KEY);
+//              Retrieves result of the request sent with API key
+            HttpResponse resp = http.execute(getPage);
+//              copies result into jsonString
+            String jsonString = EntityUtils.toString(resp.getEntity());
 
-                // HttpGet getPage = new HttpGet("https://developers.zomato.com/api/v2.1/geocode?"+"LatandLon");
-                HttpGet getPage = new HttpGet(myuri);
-                getPage.addHeader("accept", "application/json");
-                getPage.addHeader("user-key", APICredentials.API_KEY);
+            //turn it into java actual JSON object
 
-                HttpResponse resp = http.execute(getPage);
+            JSONObject json = new JSONObject(jsonString);
+//              imports json.getJSONArray so that we can pull the information we want to use
+            JSONArray rest = json.getJSONArray("nearby_restaurants");
+//          Creates an Array list to store the results from the objects we create from the json array
+            ArrayList<Restaurants> restList = new ArrayList<Restaurants>();
+//           "for loop" to pull the name, url, address etc... from JSONArray for each eatery found in the search (160 meter perimeter)
+            for (int i = 0; i < rest.length(); i++) {
 
-                String jsonString = EntityUtils.toString(resp.getEntity());
-
-                //turn it unto java actual JSON object
-
-                JSONObject json = new JSONObject(jsonString);
-
-                JSONArray rest = json.getJSONArray("nearby_restaurants");
-
-                ArrayList<Restaurants> restList = new ArrayList<Restaurants>();
-                for (int i = 0; i < rest.length(); i++) {
-
-                    String rest1N = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
-                            ("name");
-                    String rest1U = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
-                            ("url");
-                    String rest1L = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getJSONObject("location").getString
-                            ("address");
-                    String rest1Cuis = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
-                            ("cuisines");
-                    String rest1AvgCst = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
-                            ("average_cost_for_two");
-
-                    Restaurants temp = new Restaurants(rest1N, rest1L, rest1Cuis, rest1AvgCst, rest1U);
-                    restList.add(temp);
-                }
-                ModelAndView mv = new ModelAndView("Restaurants");
-
+                String rest1N = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
+                        ("name");
+                String rest1U = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
+                        ("url");
+                String rest1L = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getJSONObject("location").getString
+                        ("address");
+                String rest1Cuis = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
+                        ("cuisines");
+                String rest1AvgCst = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
+                        ("average_cost_for_two");
+// creates object of the values pulled from the JSONArray to add to restList
+                Restaurants temp = new Restaurants(rest1N, rest1L, rest1Cuis, rest1AvgCst, rest1U);
+                restList.add(temp);
+            }
+            ModelAndView mv = new ModelAndView("Restaurants");
+// creates String object that includes latitude & longitude, formatted for use in the URI,
+// to get the list of eateries (in range of the QLine stops) This was pulled from the buildingView.jsp form
             mv.addObject("LatandLon", LatandLon);
-
+//          creates the object rList for use in displaying its contents in the Restaurants.jsp table
             mv.addObject("rList", restList);
             return mv;
-//            return new ModelAndView("Restaurants", "rList", restList);
-//            Restaurants.addObject();
 
-
+//            these two exceptions are formatted to output the specific errors generated to the console
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException ex) {
@@ -236,13 +231,15 @@ public ModelAndView buildingObjects( @RequestParam("buildingId") String building
 
     }
 
+//    when the Login button on the index and other pages is clicked, it uses this method to call the
+//    userLogin.jsp form to authenticate entry
     @RequestMapping(value = "login")
     public String login() {
         //if a controller method returns just a String
         //Spring MVC knows it's a view name
         return "userLogin";
     }
-
+//
     @RequestMapping(value = "/checklogin")
     public ModelAndView login(
             @RequestParam("userId")
@@ -252,15 +249,15 @@ public ModelAndView buildingObjects( @RequestParam("buildingId") String building
                     String password
     ) {
 
-        //add the info to DB through DAO
+        //checks the info against the DB login and password, through DAO
         boolean result = DAO.login(userId, password);
 
-        //best to check the result
+        //if false calls error page
         if (!result) {
             //still have to write this view
             return new ModelAndView("error", "errmsg", "User Login Failed");
         }
-
+//         sends authenticated user to Home/Main page
         ModelAndView mv = new ModelAndView("Welcome");
 
         return mv;

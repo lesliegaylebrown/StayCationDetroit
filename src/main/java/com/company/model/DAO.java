@@ -11,47 +11,48 @@ import java.util.ArrayList;
 
 
 public class DAO {
-
+//  instantiates an object to encrypt the password String
     StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
-
+//
     public static ArrayList<User> getUserList() {
-        // define the data for the connection
-        //connection info was pulled out into DBCredentials
-        //so that file can be hidden
 
         try {
-            // Load driver
+//             Load driver JDBC driver allows connection & communication to a mySQL Dbase
             Class.forName("com.mysql.jdbc.Driver");
-            // DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 
-            // create the db connection object
+
+            // create the db connection object (mysqlconnection)
             Connection mysqlConnection;
+//          Assigns the function of establishing a connection with the Dbase
             mysqlConnection = DriverManager.getConnection(
+//                    pulls login information from DBCredentials.java (excluded from github with .gitignore)
                     DBCredentials.DB_ADDRESS,
                     DBCredentials.USERNAME,
                     DBCredentials.PASSWORD);
 
-            // create the db statement
+            // create the db query statement to list all rows from the users table
 
             String readUserCommand = "select userId,fname, lname, email, cellphone, password from users";
 
-            Statement readUsers = mysqlConnection.createStatement();// creates the statement
+            // Assigns the function of converting the above query for mysql to read
+            Statement readUsers = mysqlConnection.createStatement();
 
-            ResultSet results = readUsers.executeQuery(readUserCommand);// executes the statement
+          // executes the statement
+            ResultSet results = readUsers.executeQuery(readUserCommand);
+
             // array list of users
             ArrayList<User> userList = new ArrayList<User>();
 
-            // map from the ResultSet to the ArrayList
+            // map from the ResultSet to the ArrayList. Reads from Dbase as long as there is data to be read (.next)
             while (results.next()) {
+
+//                 Gets the String data from each cell in the row, in the table (users table)
                 User temp = new User(results.getString(1),
                         results.getString(2), results.getString(3),
                         results.getString(4), results.getString(5), results.getString(6));
+//                Creates an object from the data pulled from the Dbase, adds it to the array list
                 userList.add(temp);
 
-            }
-            for (User i:userList
-                 ) {
-                System.out.println(i);
             }
 
             return userList;
@@ -63,16 +64,12 @@ public class DAO {
 
 
     public static ArrayList<Building> getBuildingList() {
-        // define the data for the connection
-        //connection info was pulled out into DBCredentials
-        //so that file can be hidden
 
         try {
-            // Load driver
+//            Load driver JDBC driver allows connection & communication to a mySQL Dbase
             Class.forName("com.mysql.jdbc.Driver");
-            // DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 
-            // create the db connection object
+// create the db connection object (mysqlconnection)
             Connection mysqlConnection;
             mysqlConnection = DriverManager.getConnection(
                     DBCredentials.DB_ADDRESS,

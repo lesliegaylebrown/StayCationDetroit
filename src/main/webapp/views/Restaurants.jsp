@@ -7,7 +7,9 @@
 </head>
 <body>
 
+
 Restaurants near your selection
+
 
 <br><br>
 
@@ -36,27 +38,15 @@ Restaurants near your selection
                     ${restaurant.restAvgCost}
             </td>
             <td>
+
                 <a href="${restaurant.restUrl}"target="_blank">View Website</a>
+
             </td>
         </tr>
     </c:forEach>
 
 </table>
 
-
-<%--${rest1N}<br/>--%>
-<%--${rest1L}<br/>--%>
-<%--${rest1Cuis}<br/>--%>
-<%--Average Cost For 2: ${rest1AvgCst}<br/>--%>
-
-<%--<a href="${rest1U}">link </a> <br/>--%>
-
-
-
-<%--<hr>--%>
-<%--${rest}<br/>--%>
-<%--${rest2}<br/>--%>
-<%--${rest3}--%>
 
 <br><br><br><a href="/"><button>Home Page</button></a>
 </body>

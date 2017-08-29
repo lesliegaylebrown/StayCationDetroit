@@ -7,7 +7,7 @@
 </head>
 <body>
 
-Restaurants near ${BuildingChoice}
+URL: ${BuildingChoice}
 
 <br><br>
 

@@ -2,6 +2,7 @@ package com.company.controller;
 
 import com.company.model.*;
 
+import com.sun.jndi.toolkit.url.Uri;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -169,15 +172,19 @@ public class HomeController {
     }
 
     @RequestMapping("/restaurant")
-    public ModelAndView Restaurants(@RequestParam("BuildingChoice") String BuildingChoice) {
-        ModelAndView mv = new ModelAndView(" ");
-        mv.addObject("BuildingChoice", BuildingChoice);
+    public ModelAndView Restaurants(@RequestParam("BuildingChoice") String BuildingChoice) throws URISyntaxException {
+//        Uri testme = Uri.parse(BuildingChoice);
 
+//       URI myuri = new URI (BuildingChoice);
+//        System.out.println("I get teh URI");
+//String x = "https://developers.zomato.com/api/v2.1/geocode?lat=42.336167&lon=-83.049861";
         try {
             System.out.println("Entered restaurant controller");
             HttpClient http = HttpClientBuilder.create().build();
 
-            HttpGet getPage = new HttpGet("https://developers.zomato.com/api/v2.1/geocode?lat=42.336167&lon=-83.049861");
+//            System.out.println("@@@@@@" + BuildingChoice);
+//            HttpGet getPage = new HttpGet(myuri);
+            HttpGet getPage = new HttpGet("https://developers.zomato.com/api/v2.1/geocode?" + BuildingChoice);
             getPage.addHeader("accept", "application/json");
             getPage.addHeader("user-key", APICredentials.API_KEY);
 
@@ -208,8 +215,13 @@ public class HomeController {
                 Restaurants temp = new Restaurants(rest1N, rest1L, rest1Cuis, rest1AvgCst, rest1U);
                 restList.add(temp);
             }
+
+            ModelAndView mv = new ModelAndView("Restaurants");
             mv.addObject("BuildingChoice", BuildingChoice);
-            return new ModelAndView("Restaurants", "rList", restList);
+            mv.addObject("rList", restList);
+            return mv;
+//            return new ModelAndView("Restaurants", "rList", restList);
+//            Restaurants.addObject();
 
 
         } catch (IOException e) {

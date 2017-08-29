@@ -7,12 +7,7 @@
 <body>
 <form action="/checklogin" method="post">
     ID: <input name="userId" type="text" /><br />
-   <%--First Name: <input name="fName" type="text" /><br />--%>
-    <%--Last Name: <input name="lName" type="text" /><br />--%>
-    <%--Email: <input name="email" type="text" /><br />--%>
-    <%--Cell Phone: <input name="Cphone" type="text" /><br />--%>
     Password: <input name="password" type="password" /><br />
-    <%--Re-Enter Password: <input name="password2" type="password" /><br />--%>
     <input type="submit" value="Login" />
 </form>
 </body>

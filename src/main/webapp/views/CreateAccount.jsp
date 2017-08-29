@@ -6,6 +6,8 @@
 
 </head>
 <body>
+
+<%--this form takes user input, to be sent to the addUser mapping in the HomeController, then Dbase--%>
 <form action="addUser" method="post">
 
     Enter User ID. (User ID must be at least 3 to 12 characters long)

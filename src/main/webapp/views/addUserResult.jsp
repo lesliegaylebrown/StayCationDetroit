@@ -11,7 +11,7 @@
     Phone Number: ${CellPhone}<br />
     Email address: ${Email}<br /><br>
 
-
+<%--Let's user login with the info just entered--%>
     <a href="login"><button>Login</button></a>
 
 </body>

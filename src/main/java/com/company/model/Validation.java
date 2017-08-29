@@ -35,7 +35,7 @@ public class Validation {
     }
 
     public static boolean validatePassword(String password) {
-
+//todo: check the symbols btw each criteria
         return (password.matches("^(?=.*[a-z])|(?=.*d)(?=.*[A-Z])|(?=.*[!@#$?.]).{8,64}"));
     }
 

@@ -169,8 +169,6 @@ public ModelAndView buildingObjects( @RequestParam("buildingId") String building
 
     @RequestMapping("/restaurant")
     public ModelAndView Restaurants(@RequestParam("BuildingChoice") String BuildingChoice) {
-        ModelAndView mv = new ModelAndView(" ");
-
 
         try {
             System.out.println("Entered restaurant controller");
@@ -207,8 +205,12 @@ public ModelAndView buildingObjects( @RequestParam("buildingId") String building
                 Restaurants temp = new Restaurants(rest1N, rest1L, rest1Cuis, rest1AvgCst, rest1U);
                 restList.add(temp);
             }
+            ModelAndView mv = new ModelAndView("Restaurants");
             mv.addObject("BuildingChoice", BuildingChoice);
-            return new ModelAndView("Restaurants", "rList", restList);
+            mv.addObject("rList", restList);
+            return mv;
+//            return new ModelAndView("Restaurants", "rList", restList);
+//            Restaurants.addObject();
 
 
         } catch (IOException e) {

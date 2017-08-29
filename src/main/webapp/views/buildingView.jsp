@@ -51,7 +51,7 @@
             <td>
                 <form action="restaurant" method="post">
                     <input type="hidden" name="BuildingChoice"
-                           value="${item.buildingId}">
+                           value="${item.buildingName}">
                     <input type="submit" value="Choose">
                 </form>
 

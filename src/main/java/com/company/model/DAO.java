@@ -81,7 +81,7 @@ public class DAO {
 
             // create the db statement
 
-            String readBuildingCommand = "select buildingId,  buildingName,  buildingAddress,  buildingDescription,  buildingImage,  qLineStops from architecture";
+            String readBuildingCommand = "select buildingId,  buildingName,  buildingAddress,  buildingDescription,  buildingImage,  qLineStops, longitude, latitude from attractions";
 
             Statement readBuilding = mysqlConnection.createStatement();// creates the statement
 
@@ -93,7 +93,8 @@ public class DAO {
             while (results.next()) {
                 Building temp = new Building(results.getString(1),
                         results.getString(2), results.getString(3),
-                        results.getString(4), results.getString(5), results.getString(6));
+                        results.getString(4), results.getString(5), results.getString(6), results.getDouble(7), results.getDouble(8));
+
                 buildingList.add(temp);
 
             }

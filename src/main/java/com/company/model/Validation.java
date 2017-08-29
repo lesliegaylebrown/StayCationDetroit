@@ -34,22 +34,17 @@ public class Validation {
         return (input.matches("^(1\\-)?[0-9]{3}\\-?[0-9]{3}\\-?[0-9]{4}$"));
     }
 
+    public static boolean validatePassword(String password) {
 
-    public static boolean validatePassword(String password/*, String password2*/) {
+        return (password.matches("^(?=.*[a-z])|(?=.*d)(?=.*[A-Z])|(?=.*[!@#$?.]).{8,64}"));
+    }
 
-        boolean x = true;
+    public static String encryptPassword(String password) {
+        StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
 
-        if (!(password.matches("(?=.*[a-z])(?=.*d)(?=.*[A-Z])(?=.*[!@#$?.]).{8,64}"))) {
+        String passEncrypted = enc.encryptPassword(password);
 
-            x = false;
-        }
-//        else if (!(password.equals(password2))) {
-//
-//            System.out.println("Passwords don't match.");
-//
-//            x = false;
-//        }
-
-        return x;
+        password = passEncrypted;
+        return password;
     }
 }

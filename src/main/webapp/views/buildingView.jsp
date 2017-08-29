@@ -18,9 +18,9 @@
 
 <table border="1">
     <tr>
-    <th>Building Image</th>
 
-        <th>Building Name</th><th>Building Address</th><th>Building Description</th><th>QLine Stops</th>
+
+        <th>Building Image</th><th>Building Name</th><th>Building Address</th><th>Building Description</th><th>QLine Stops</th>
     </tr>
     <c:forEach items="${buildingList}" var="item">
         <tr>
@@ -51,7 +51,7 @@
             <td>
                 <form action="restaurant" method="post">
                     <input type="hidden" name="BuildingChoice"
-                           value="${item.buildingId}">
+                           value="${item.longitude} ${item.latitude}">
                     <input type="submit" value="Choose">
                 </form>
 
@@ -60,6 +60,7 @@
     </c:forEach>
 
 </table>
+
 <br><br>
 <a href="/"><button>Home Page</button></a>
 </body>

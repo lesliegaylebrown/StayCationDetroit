@@ -18,6 +18,6 @@
    <a href="/getAllUsers"><button>View/Delete Users</button></a>
    <a href="restaurant"><button>Restaurants</button></a>
 
-
+${longitude}
 </body>
 </html>

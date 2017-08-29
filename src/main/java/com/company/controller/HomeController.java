@@ -114,8 +114,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "getAllBuildings")
-    public ModelAndView getAllBuildings()
-    {
+    public ModelAndView getAllBuildings() {
 
         ArrayList<Building> buildingList = DAO.getBuildingList();
 
@@ -129,14 +128,15 @@ public class HomeController {
 
 
     }
-public ModelAndView buildingObjects( @RequestParam("buildingId") String buildingId,
-                                     @RequestParam("buildingName") String buildingName,
-                                     @RequestParam("buildingAddress") String buildingAddress,
-                                     @RequestParam("buildingDescription") String buildingDescription,
-                                     @RequestParam("buildingImage") String buildingImage,
-                                     @RequestParam("qlineStops") String qlineStops,
-                                     @RequestParam("longitude") double longitude,
-                                     @RequestParam("latitude") double latitude){
+
+    public ModelAndView buildingObjects(@RequestParam("buildingId") String buildingId,
+                                        @RequestParam("buildingName") String buildingName,
+                                        @RequestParam("buildingAddress") String buildingAddress,
+                                        @RequestParam("buildingDescription") String buildingDescription,
+                                        @RequestParam("buildingImage") String buildingImage,
+                                        @RequestParam("qlineStops") String qlineStops,
+                                        @RequestParam("longitude") double longitude,
+                                        @RequestParam("latitude") double latitude) {
         ModelAndView mv = new ModelAndView(" ");
 
         mv.addObject("buildingId", buildingId);
@@ -147,7 +147,8 @@ public ModelAndView buildingObjects( @RequestParam("buildingId") String building
         mv.addObject("qlineStops", qlineStops);
         mv.addObject("longitude", longitude);
         mv.addObject("latitude", latitude);
-        return mv;}
+        return mv;
+    }
 
     @RequestMapping("deleteUser")
     public String deleteUser(
@@ -170,7 +171,7 @@ public ModelAndView buildingObjects( @RequestParam("buildingId") String building
     @RequestMapping("/restaurant")
     public ModelAndView Restaurants(@RequestParam("BuildingChoice") String BuildingChoice) {
         ModelAndView mv = new ModelAndView(" ");
-
+        mv.addObject("BuildingChoice", BuildingChoice);
 
         try {
             System.out.println("Entered restaurant controller");

@@ -26,6 +26,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.jws.WebParam;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -44,15 +45,15 @@ public class HomeController {
 
     //handle the submit of the user form
     @RequestMapping(value = "/addUser")
-    public ModelAndView addUser (
-        @RequestParam("userId") String userId,
-        @RequestParam("fName") String fName,
-        @RequestParam("lName") String lName,
-        @RequestParam("email") String email,
-        @RequestParam("Cphone") String cPhone,
-        @RequestParam("password") String password
+    public ModelAndView addUser(
+            @RequestParam("userId") String userId,
+            @RequestParam("fName") String fName,
+            @RequestParam("lName") String lName,
+            @RequestParam("email") String email,
+            @RequestParam("Cphone") String cPhone,
+            @RequestParam("password") String password
 
-        ) {
+    ) {
         boolean goodUserid = Validation.validateUserId(userId);
         if (!goodUserid) {
             return new ModelAndView("error", "errmsg", "Invalid User ID");
@@ -73,17 +74,13 @@ public class HomeController {
         if (!goodcPhone) {
             return new ModelAndView("error", "errmsg", "Invalid phone number");
         }
-        String password2 = " ";
+
         boolean goodpassword = Validation.validatePassword(password);
         if (!goodpassword) {
-            return new ModelAndView("error", "errmsg", "Invalid password/match");
+            return new ModelAndView("error", "errmsg", "Invalid password");
         }
 
-        StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
-
-        String passEncrypted = enc.encryptPassword(password);
-
-        password = passEncrypted;
+        password = Validation.encryptPassword(password);
 
         //add the info to DB through DAO
         boolean result = DAO.addUser(userId, fName, lName, email, cPhone, password);
@@ -104,24 +101,6 @@ public class HomeController {
         return mv;
     }
 
-    @RequestMapping(value = "buildings")
-    public ModelAndView buildings (
-            @RequestParam("BuildingChoice") String buildingChoice)
-
-
-    { ModelAndView mv = new ModelAndView("");
-        mv.addObject("BuildingChoice", buildingChoice);
-
-
-        return mv;}
-
-
-    public ModelAndView buildings(){
-        return new ModelAndView("buildings");
-        }
-
-
-
     @RequestMapping(value = "getAllUsers")
     public ModelAndView getAllUsers() {
         ArrayList<User> userList = DAO.getUserList();
@@ -131,23 +110,47 @@ public class HomeController {
             return new ModelAndView("error", "errmsg", "User list is null");
         }
 
-        return new ModelAndView("delUserView","uList",userList);
+        return new ModelAndView("delUserView", "uList", userList);
     }
 
     @RequestMapping(value = "getAllBuildings")
-    public ModelAndView getAllBuildings() {
+    public ModelAndView getAllBuildings()
+    {
+
         ArrayList<Building> buildingList = DAO.getBuildingList();
+
 
         //TODO: make error.jsp
         if (buildingList == null) {
             return new ModelAndView("error", "errmsg", "Building list is null");
         }
 
-        return new ModelAndView("buildingView","buildingList",buildingList);
+        return new ModelAndView("buildingView", "buildingList", buildingList);
+
+
     }
+public ModelAndView buildingObjects( @RequestParam("buildingId") String buildingId,
+                                     @RequestParam("buildingName") String buildingName,
+                                     @RequestParam("buildingAddress") String buildingAddress,
+                                     @RequestParam("buildingDescription") String buildingDescription,
+                                     @RequestParam("buildingImage") String buildingImage,
+                                     @RequestParam("qlineStops") String qlineStops,
+                                     @RequestParam("longitude") double longitude,
+                                     @RequestParam("latitude") double latitude){
+        ModelAndView mv = new ModelAndView(" ");
+
+        mv.addObject("buildingId", buildingId);
+        mv.addObject("buildingName", buildingName);
+        mv.addObject("buildingAddress", buildingAddress);
+        mv.addObject("buildingDescription", buildingDescription);
+        mv.addObject("buildingImage", buildingImage);
+        mv.addObject("qlineStops", qlineStops);
+        mv.addObject("longitude", longitude);
+        mv.addObject("latitude", latitude);
+        return mv;}
 
     @RequestMapping("deleteUser")
-    public String deleteUser (
+    public String deleteUser(
             Model model,
             @RequestParam("userId") String userId) {
         //make it happen with the DB
@@ -165,7 +168,10 @@ public class HomeController {
     }
 
     @RequestMapping("/restaurant")
-    public ModelAndView Restaurants() {
+    public ModelAndView Restaurants(@RequestParam("BuildingChoice") String BuildingChoice) {
+        ModelAndView mv = new ModelAndView(" ");
+
+
         try {
             System.out.println("Entered restaurant controller");
             HttpClient http = HttpClientBuilder.create().build();
@@ -176,7 +182,6 @@ public class HomeController {
 
             HttpResponse resp = http.execute(getPage);
 
-
             String jsonString = EntityUtils.toString(resp.getEntity());
 
             //turn it unto java actual JSON object
@@ -186,7 +191,7 @@ public class HomeController {
             JSONArray rest = json.getJSONArray("nearby_restaurants");
 
             ArrayList<Restaurants> restList = new ArrayList<Restaurants>();
-            for (int i = 0; i < rest.length() ; i++) {
+            for (int i = 0; i < rest.length(); i++) {
 
                 String rest1N = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
                         ("name");
@@ -202,52 +207,9 @@ public class HomeController {
                 Restaurants temp = new Restaurants(rest1N, rest1L, rest1Cuis, rest1AvgCst, rest1U);
                 restList.add(temp);
             }
+            mv.addObject("BuildingChoice", BuildingChoice);
+            return new ModelAndView("Restaurants", "rList", restList);
 
-
-//            String rest1N = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
-//                    ("name");
-//            String rest1U = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
-//                    ("url");
-//            String rest1L = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getJSONObject("location").getString
-//                    ("address");
-//            String rest1Cuis = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
-//                    ("cuisines");
-//            String rest1AvgCst = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
-//                    ("average_cost_for_two");
-//            String rest2 = json.getJSONArray("nearby_restaurants").getJSONObject(0).toString();
-//
-//            JSONArray rest3 = json.getJSONArray("nearby_restaurants");
-//
-//            String rest2N = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
-//                    ("name");
-//            String rest2U = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
-//                    ("url");
-//            String rest2L = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getJSONObject("location").getString
-//                    ("address");
-//            String rest2Cuis = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
-//                    ("cuisines");
-//            String rest2AvgCst = json.getJSONArray("nearby_restaurants").getJSONObject(0).getJSONObject("restaurant").getString
-//                    ("average_cost_for_two");
-//
-//
-//
-//
-//            ModelAndView mv = new ModelAndView("Restaurants");
-//            mv.addObject("JSONstring", json.toString());
-//            mv.addObject("rest1N",rest1N);
-//            mv.addObject("rest1U", rest1U);
-//            mv.addObject("rest1L", rest1L);
-//            mv.addObject("rest1Cuis",rest1Cuis);
-//            mv.addObject("rest1AvgCst",rest1AvgCst);
-//
-//            mv.addObject("rest2N",rest1N);
-//            mv.addObject("rest2U", rest1U);
-//            mv.addObject("rest2L", rest1L);
-//            mv.addObject("rest2Cuis",rest1Cuis);
-//            mv.addObject("rest2AvgCst",rest1AvgCst);
-
-            //return mv;
-            return new ModelAndView("Restaurants", "rList",restList);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -266,8 +228,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/checklogin")
-
-    public ModelAndView login (
+    public ModelAndView login(
             @RequestParam("userId")
                     String userId,
 
@@ -284,29 +245,12 @@ public class HomeController {
             return new ModelAndView("error", "errmsg", "User Login Failed");
         }
 
-        ModelAndView mv = new ModelAndView("/buildings");
+        ModelAndView mv = new ModelAndView("Welcome");
 
         return mv;
+
     }
-
-    @RequestMapping("/loginsubmit")
-    public ModelAndView loginsubmit (
-            @RequestParam("name") String fname,
-            HttpSession session
-    ) {
-        fname = fname.trim();
-        if (fname == null || fname.length() == 0) {
-            return new ModelAndView("error", "errmsg",
-                    "Name cannot be blank");
-        }
-
-        session.setAttribute("loginStatus", "Logged In");
-        session.setAttribute("username", fname);
-
-        ModelAndView mv = new ModelAndView("loginsuccess");
-        return mv;
-    }
-
 
 }
+
 

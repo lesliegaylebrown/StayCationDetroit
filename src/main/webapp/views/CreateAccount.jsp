@@ -2,15 +2,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <%--<title>User Form</title>--%>
-
-
+    <title>Create Account</title>
 
 </head>
 <body>
 <form action="addUser" method="post">
 
-    Enter User ID. (User ID must be at least 6 to 12 characters long)
+    Enter User ID. (User ID must be at least 3 to 12 characters long)
     <br>
     ID: <input name="userId" type="text" />
     <br /><br />
@@ -31,8 +29,6 @@
     Password: <input name="password" type="password" />
 
     <br />
-<%--    Re-Enter Password: <input name="password2" type="password" />
-    --%>
     <br />
     <input type="submit" value="Add User" />
 </form>

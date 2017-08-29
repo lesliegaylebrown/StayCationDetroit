@@ -7,7 +7,9 @@
 </head>
 <body>
 
-Restaurants near ${BuildingChoice}<br><br>
+Restaurants near ${BuildingChoice}
+
+<br><br>
 
 <table border="1">
     <tr>
@@ -34,7 +36,7 @@ Restaurants near ${BuildingChoice}<br><br>
                     ${restaurant.restAvgCost}
             </td>
             <td>
-                <a href=    "${restaurant.restUrl}">View Website</a>
+                <a href="${restaurant.restUrl}">View Website</a>
             </td>
         </tr>
     </c:forEach>

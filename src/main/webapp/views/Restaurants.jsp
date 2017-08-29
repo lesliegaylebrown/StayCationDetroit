@@ -7,7 +7,7 @@
 </head>
 <body>
 
-Restaurants near ${BuildingChoice}
+Restaurants near your selection
 
 <br><br>
 

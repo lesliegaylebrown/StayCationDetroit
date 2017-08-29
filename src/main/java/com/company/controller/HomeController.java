@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -168,13 +170,19 @@ public ModelAndView buildingObjects( @RequestParam("buildingId") String building
     }
 
     @RequestMapping("/restaurant")
-    public ModelAndView Restaurants(@RequestParam("BuildingChoice") String BuildingChoice) {
-
+    public ModelAndView Restaurants(@RequestParam("LatandLon") String LatandLon
+//    @RequestParam("Long") double Long, @RequestParam("Lat") double Lat
+    ) throws URISyntaxException {
+            String latLon = LatandLon;
+            String test1 = "https://developers.zomato.com/api/v2.1/geocode?";
+            String test2 = test1 + latLon;
+            URI myuri = new URI(test2);
         try {
             System.out.println("Entered restaurant controller");
             HttpClient http = HttpClientBuilder.create().build();
 
-            HttpGet getPage = new HttpGet("https://developers.zomato.com/api/v2.1/geocode?lat=42.336167&lon=-83.049861");
+           // HttpGet getPage = new HttpGet("https://developers.zomato.com/api/v2.1/geocode?"+"LatandLon");
+            HttpGet getPage = new HttpGet(myuri);
             getPage.addHeader("accept", "application/json");
             getPage.addHeader("user-key", APICredentials.API_KEY);
 
@@ -206,7 +214,7 @@ public ModelAndView buildingObjects( @RequestParam("buildingId") String building
                 restList.add(temp);
             }
             ModelAndView mv = new ModelAndView("Restaurants");
-            mv.addObject("BuildingChoice", BuildingChoice);
+            mv.addObject("LatandLon", LatandLon);
             mv.addObject("rList", restList);
             return mv;
 //            return new ModelAndView("Restaurants", "rList", restList);

@@ -50,9 +50,9 @@
 
             <td>
                 <form action="restaurant" method="post">
-                    <input type="hidden" name="BuildingChoice"
 
-                    value="lat=${item.latitude}&lon=-${item.longitude}">
+                    <input type="hidden" name="LatandLon"
+                           value="lat=${item.latitude}&lon=${item.longitude}">
 
                     <input type="submit" value="Choose">
                 </form>

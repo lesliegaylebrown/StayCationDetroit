@@ -172,19 +172,23 @@ public class HomeController {
     }
 
     @RequestMapping("/restaurant")
-    public ModelAndView Restaurants(@RequestParam("BuildingChoice") String BuildingChoice) throws URISyntaxException {
-//        Uri testme = Uri.parse(BuildingChoice);
 
-//       URI myuri = new URI (BuildingChoice);
-//        System.out.println("I get teh URI");
-//String x = "https://developers.zomato.com/api/v2.1/geocode?lat=42.336167&lon=-83.049861";
+    public ModelAndView Restaurants(@RequestParam("LatandLon") String LatandLon
+//    @RequestParam("Long") double Long, @RequestParam("Lat") double Lat
+    ) throws URISyntaxException {
+            String latLon = LatandLon;
+            String test1 = "https://developers.zomato.com/api/v2.1/geocode?";
+            String test2 = test1 + latLon;
+            URI myuri = new URI(test2);
+
         try {
             System.out.println("Entered restaurant controller");
             HttpClient http = HttpClientBuilder.create().build();
 
-//            System.out.println("@@@@@@" + BuildingChoice);
-//            HttpGet getPage = new HttpGet(myuri);
-            HttpGet getPage = new HttpGet("https://developers.zomato.com/api/v2.1/geocode?" + BuildingChoice);
+
+           // HttpGet getPage = new HttpGet("https://developers.zomato.com/api/v2.1/geocode?"+"LatandLon");
+            HttpGet getPage = new HttpGet(myuri);
+
             getPage.addHeader("accept", "application/json");
             getPage.addHeader("user-key", APICredentials.API_KEY);
 
@@ -217,7 +221,7 @@ public class HomeController {
             }
 
             ModelAndView mv = new ModelAndView("Restaurants");
-            mv.addObject("BuildingChoice", BuildingChoice);
+            mv.addObject("LatandLon", LatandLon);
             mv.addObject("rList", restList);
             return mv;
 //            return new ModelAndView("Restaurants", "rList", restList);

@@ -7,7 +7,9 @@
 </head>
 <body>
 
-URL: ${BuildingChoice}
+
+Restaurants near your selection
+
 
 <br><br>
 
@@ -43,20 +45,6 @@ URL: ${BuildingChoice}
 
 </table>
 
-
-<%--${rest1N}<br/>--%>
-<%--${rest1L}<br/>--%>
-<%--${rest1Cuis}<br/>--%>
-<%--Average Cost For 2: ${rest1AvgCst}<br/>--%>
-
-<%--<a href="${rest1U}">link </a> <br/>--%>
-
-
-
-<%--<hr>--%>
-<%--${rest}<br/>--%>
-<%--${rest2}<br/>--%>
-<%--${rest3}--%>
 
 <br><br><br><a href="/"><button>Home Page</button></a>
 </body>

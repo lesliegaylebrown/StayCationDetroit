@@ -50,10 +50,10 @@
 
             <td>
                 <form action="restaurant" method="post">
-<<<<<<< HEAD
+
                     <input type="hidden" name="BuildingChoice"
                            value="${item.buildingName}">
-=======
+
                     <%--<input type="hidden" name="BuildingChoice"--%>
                            <%--value="${item.buildingName}"& >--%>
                     <%--<input type="submit" value="Choose">--%>
@@ -62,7 +62,7 @@
                     <%--<input type="submit" value="Choose">--%>
                     <input type="hidden" name="LatandLon"
                            value="lat=${item.latitude}&lon=${item.longitude}">
->>>>>>> fe30be2d321a0d177ca6336f5819d5a8b82bc03c
+
                     <input type="submit" value="Choose">
                 </form>
 

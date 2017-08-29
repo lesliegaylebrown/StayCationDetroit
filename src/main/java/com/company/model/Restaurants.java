@@ -1,8 +1,6 @@
 package com.company.model;
 
-/**
- * Created by Gateway on 8/28/2017.
- */
+
 public class Restaurants {
 
    public Restaurants(){

@@ -38,7 +38,7 @@ Restaurants near your selection
                     ${restaurant.restAvgCost}
             </td>
             <td>
-                <a href="${restaurant.restUrl}">View Website</a>
+                <a href="${restaurant.restUrl}>View Website</a>
             </td>
         </tr>
     </c:forEach>

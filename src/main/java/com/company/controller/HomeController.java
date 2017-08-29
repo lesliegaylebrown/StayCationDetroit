@@ -172,53 +172,55 @@ public class HomeController {
 
     @RequestMapping("/restaurant")
 
-    public ModelAndView Restaurants(@RequestParam("LatandLon") String LatandLon
+        public ModelAndView Restaurants(@RequestParam("LatandLon") String LatandLon
 //    @RequestParam("Long") double Long, @RequestParam("Lat") double Lat
     ) throws URISyntaxException {
-        String latLon = LatandLon;
-        String test1 = "https://developers.zomato.com/api/v2.1/geocode?";
-        String test2 = test1 + latLon;
-        URI myuri = new URI(test2);
+            String latLon = LatandLon;
+            String test1 = "https://developers.zomato.com/api/v2.1/geocode?";
+            String test2 = test1 + latLon;
+            URI myuri = new URI(test2);
 
-        try {
-            System.out.println("Entered restaurant controller");
-            HttpClient http = HttpClientBuilder.create().build();
+            try {
+                System.out.println("Entered restaurant controller");
+                HttpClient http = HttpClientBuilder.create().build();
 
-            HttpGet getPage = new HttpGet(myuri);
 
-            getPage.addHeader("accept", "application/json");
-            getPage.addHeader("user-key", APICredentials.API_KEY);
+                // HttpGet getPage = new HttpGet("https://developers.zomato.com/api/v2.1/geocode?"+"LatandLon");
+                HttpGet getPage = new HttpGet(myuri);
+                getPage.addHeader("accept", "application/json");
+                getPage.addHeader("user-key", APICredentials.API_KEY);
 
-            HttpResponse resp = http.execute(getPage);
+                HttpResponse resp = http.execute(getPage);
 
-            String jsonString = EntityUtils.toString(resp.getEntity());
+                String jsonString = EntityUtils.toString(resp.getEntity());
 
-            //turn it unto java actual JSON object
+                //turn it unto java actual JSON object
 
-            JSONObject json = new JSONObject(jsonString);
+                JSONObject json = new JSONObject(jsonString);
 
-            JSONArray rest = json.getJSONArray("nearby_restaurants");
+                JSONArray rest = json.getJSONArray("nearby_restaurants");
 
-            ArrayList<Restaurants> restList = new ArrayList<Restaurants>();
-            for (int i = 0; i < rest.length(); i++) {
+                ArrayList<Restaurants> restList = new ArrayList<Restaurants>();
+                for (int i = 0; i < rest.length(); i++) {
 
-                String rest1N = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
-                        ("name");
-                String rest1U = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
-                        ("url");
-                String rest1L = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getJSONObject("location").getString
-                        ("address");
-                String rest1Cuis = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
-                        ("cuisines");
-                String rest1AvgCst = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
-                        ("average_cost_for_two");
+                    String rest1N = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
+                            ("name");
+                    String rest1U = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
+                            ("url");
+                    String rest1L = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getJSONObject("location").getString
+                            ("address");
+                    String rest1Cuis = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
+                            ("cuisines");
+                    String rest1AvgCst = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
+                            ("average_cost_for_two");
 
-                Restaurants temp = new Restaurants(rest1N, rest1L, rest1Cuis, rest1AvgCst, rest1U);
-                restList.add(temp);
-            }
+                    Restaurants temp = new Restaurants(rest1N, rest1L, rest1Cuis, rest1AvgCst, rest1U);
+                    restList.add(temp);
+                }
+                ModelAndView mv = new ModelAndView("Restaurants");
 
-            ModelAndView mv = new ModelAndView("Restaurants");
             mv.addObject("LatandLon", LatandLon);
+
             mv.addObject("rList", restList);
             return mv;
 

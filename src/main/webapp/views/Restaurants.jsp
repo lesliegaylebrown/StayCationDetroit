@@ -8,7 +8,7 @@
 <body>
 
 
-Restaurants near your selection
+Restaurants near your selection.
 
 
 <br><br>
@@ -46,8 +46,9 @@ Restaurants near your selection
     </c:forEach>
 
 </table>
-
-
-<br><br><br><a href="/"><button>Home Page</button></a>
+<br><br><br>
+<a href="/getAllBuildings"><button>Select another building</button></a><br>
+<a href="BackWelcome"><button>Welcome Page</button></a><br>
+<a href="/"><button>Home Page</button></a>
 </body>
 </html>

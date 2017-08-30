@@ -30,8 +30,6 @@
     Password must be at least 8, but less than 60 characters long. Password must include one of each,<br>a capital letter, a lower case letter, a number, and one of these symbols (! @ # $ ?)<br>
     Password: <input name="password" type="password" />
 
-    Please re-enter Password: <input name="password2" type="password"/>
-
     <br />
     <br />
     <input type="submit" value="Create Account" />

@@ -20,7 +20,7 @@
     <tr>
 
 
-        <th>Building Image</th><th>Building Name</th><th>Building Address</th><th>Building Description</th><th>QLine Stops</th>
+        <th>Building Image</th><th>Building Name</th><th>Building Address</th><th>Building Description</th><th>QLine Stops</th><th>Eateries Near By</th>
     </tr>
     <c:forEach items="${buildingList}" var="item">
         <tr>
@@ -48,8 +48,21 @@
                     ${item.qLineStops}
             </td>
 
+
+
             <td>
                 <form action="restaurant" method="post">
+
+
+                    <input type="hidden" name="BuildingChoice"
+                           value="${item.buildingName}">
+
+                    <%--<input type="hidden" name="BuildingChoice"--%>
+                           <%--value="${item.buildingName}"& >--%>
+                    <%--<input type="submit" value="Choose">--%>
+                    <%--<input type="hidden" name="Long"--%>
+                           <%--value="${item.longitude}">--%>
+                    <%--<input type="submit" value="Choose">--%>
 
                     <input type="hidden" name="LatandLon"
                            value="lat=${item.latitude}&lon=${item.longitude}">

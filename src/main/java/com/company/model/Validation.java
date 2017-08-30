@@ -5,6 +5,7 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 import java.util.regex.*;
 import java.util.Scanner;
 
+
 public class Validation {
     Scanner scnr = new Scanner(System.in);
 

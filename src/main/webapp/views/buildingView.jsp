@@ -77,6 +77,7 @@
 </table>
 
 <br><br>
+<a href="BackWelcome"><button>Welcome Page</button></a><br>
 <a href="/"><button>Home Page</button></a>
 </body>
 </html>

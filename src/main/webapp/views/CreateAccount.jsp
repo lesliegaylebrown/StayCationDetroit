@@ -57,8 +57,12 @@
     </div>
     <br />
     <br />
+
     <input type="submit" value="Add User" />
 
+
+
+    <input type="submit" value="Create Account" />
 
 </form>
 

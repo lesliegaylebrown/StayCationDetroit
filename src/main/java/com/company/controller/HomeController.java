@@ -2,6 +2,12 @@ package com.company.controller;
 
 import com.company.model.*;
 
+//Brought in from the sessions code from Peter
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.sun.jndi.toolkit.url.Uri;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -49,6 +55,13 @@ public class HomeController {
         return "CreateAccount";
     }
 
+    @RequestMapping(value = "BackWelcome")
+    public String Welcome() {
+        //if a controller method returns just a String
+        //Spring MVC knows it's a view name
+        return "Welcome";
+    }
+
 
     //handle the submit of the user form, user input validation, and user password encryption
     @RequestMapping(value = "/addUser")
@@ -81,6 +94,11 @@ public class HomeController {
         boolean goodcPhone = Validation.validatePhoneNumber(cPhone);
         if (!goodcPhone) {
             return new ModelAndView("error", "errmsg", "Invalid phone number");
+        }
+
+        boolean goodPasswordMatch = Validation.validatePhoneNumber(cPhone);
+        if (!goodPasswordMatch) {
+            return new ModelAndView("error", "errmsg", "Password mismatch");
         }
 
         boolean goodpassword = Validation.validatePassword(password);

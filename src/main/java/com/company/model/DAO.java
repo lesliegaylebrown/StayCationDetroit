@@ -11,9 +11,7 @@ import java.util.ArrayList;
 
 
 public class DAO {
-//  instantiates an object to encrypt the password String
-    StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
-//
+
     public static ArrayList<User> getUserList() {
 
         try {
@@ -91,14 +89,13 @@ public class DAO {
                 Building temp = new Building(results.getString(1),
                         results.getString(2), results.getString(3),
                         results.getString(4), results.getString(5), results.getString(6), results.getDouble(7), results.getDouble(8));
-
+//          loops through results of database query to create
+//          new arrayList
                 buildingList.add(temp);
 
             }
-            for (Building i:buildingList
-                    ) {
-                System.out.println(i);
-            }
+
+
 
             return buildingList;
         } catch (Exception ex) {
@@ -170,20 +167,19 @@ public class DAO {
                     DBCredentials.USERNAME,
                     DBCredentials.PASSWORD);
 
-            String readUserCommand = "select userId, fname, lname, email, cellphone, password from users where userId='"
+            String readUserCommand = "select userId, password from users where userId='"
             + userId + "'";
 
             Statement readUsers = mysqlConnection.createStatement();// creates the statement
 
             ResultSet results = readUsers.executeQuery(readUserCommand);// executes the statement
+
             // array list of users
             ArrayList<User> userList = new ArrayList<User>();
 
             // map from the ResultSet to the ArrayList
             while (results.next()) {
-//                User temp = new User(results.getString(1),
-//                        results.getString(2), results.getString(3),
-//                        results.getString(4), results.getString(5), results.getString(6));
+
                 String dbResPassword = results.getString(6);
                 StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
                 boolean match = enc.checkPassword(password, dbResPassword);

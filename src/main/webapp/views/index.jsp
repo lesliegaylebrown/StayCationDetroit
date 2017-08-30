@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<center><h1>Welcome to StayCation: Detroit Qline Edition</h1></center>
+<center><h1>Welcome to StayCation: Detroit Qline Edition!</h1></center>
 <br/><br/>
 
 <%--Buttons for links to registration and login--%>

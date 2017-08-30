@@ -20,7 +20,7 @@
     <tr>
 
 
-        <th>Building Image</th><th>Building Name</th><th>Building Address</th><th>Building Description</th><th>QLine Stops</th>
+        <th>Building Image</th><th>Building Name</th><th>Building Address</th><th>Building Description</th><th>QLine Stops</th><th>Eateries Near By</th>
     </tr>
     <c:forEach items="${buildingList}" var="item">
         <tr>
@@ -47,6 +47,8 @@
             <td>
                     ${item.qLineStops}
             </td>
+
+
 
             <td>
                 <form action="restaurant" method="post">

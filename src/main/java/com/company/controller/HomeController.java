@@ -170,9 +170,10 @@ public class HomeController {
 // satisfies requirement to include an exception for the URI data type
     ) throws URISyntaxException {
         String latLon = LatandLon;
-        String test1 = "https://developers.zomato.com/api/v2.1/geocode?";
-        String test2 = test1 + latLon;
-        URI myuri = new URI(test2);
+        String test1 = "https://developers.zomato.com/api/v2.1/search?entity_type=metro&start=0&count=100&";
+        String test2 = "&radius=160&sort=real_distance&order=asc";
+        String test3 = test1 + latLon + test2;
+        URI myuri = new URI(test3);
 
         try {
 //              Allows access to JSON file
@@ -193,21 +194,21 @@ public class HomeController {
 
             JSONObject json = new JSONObject(jsonString);
 //              imports json.getJSONArray so that we can pull the information we want to use
-            JSONArray rest = json.getJSONArray("nearby_restaurants");
+            JSONArray rest = json.getJSONArray("restaurants");
 //          Creates an Array list to store the results from the objects we create from the json array
             ArrayList<Restaurants> restList = new ArrayList<Restaurants>();
 //           "for loop" to pull the name, url, address etc... from JSONArray for each eatery found in the search (160 meter perimeter)
             for (int i = 0; i < rest.length(); i++) {
 
-                String rest1N = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
+                String rest1N = json.getJSONArray("restaurants").getJSONObject(i).getJSONObject("restaurant").getString
                         ("name");
-                String rest1U = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
+                String rest1U = json.getJSONArray("restaurants").getJSONObject(i).getJSONObject("restaurant").getString
                         ("url");
-                String rest1L = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getJSONObject("location").getString
+                String rest1L = json.getJSONArray("restaurants").getJSONObject(i).getJSONObject("restaurant").getJSONObject("location").getString
                         ("address");
-                String rest1Cuis = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
+                String rest1Cuis = json.getJSONArray("restaurants").getJSONObject(i).getJSONObject("restaurant").getString
                         ("cuisines");
-                String rest1AvgCst = json.getJSONArray("nearby_restaurants").getJSONObject(i).getJSONObject("restaurant").getString
+                String rest1AvgCst = json.getJSONArray("restaurants").getJSONObject(i).getJSONObject("restaurant").getString
                         ("average_cost_for_two");
 // creates object of the values pulled from the JSONArray to add to restList
                 Restaurants temp = new Restaurants(rest1N, rest1L, rest1Cuis, rest1AvgCst, rest1U);

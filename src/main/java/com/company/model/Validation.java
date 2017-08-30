@@ -5,10 +5,6 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 import java.util.regex.*;
 import java.util.Scanner;
 
-/**
- * Created by marcking2 on 8/22/17.
- */
-
 public class Validation {
     Scanner scnr = new Scanner(System.in);
 
@@ -39,6 +35,9 @@ public class Validation {
         return (password.matches("^(?=.*[a-z])|(?=.*d)(?=.*[A-Z])|(?=.*[!@#$?.]).{8,64}"));
     }
 
+//    public static boolean validate
+//    (!(password.equals(password2)))
+//todo:comment
     public static String encryptPassword(String password) {
         StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
 

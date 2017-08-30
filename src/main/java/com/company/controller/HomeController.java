@@ -58,7 +58,8 @@ public class HomeController {
             @RequestParam("lName") String lName,
             @RequestParam("email") String email,
             @RequestParam("Cphone") String cPhone,
-            @RequestParam("password") String password
+            @RequestParam("password") String password,
+            @RequestParam("password2") String password2
 
     ) {
 //        this code calls the validation methods for each registration field
@@ -81,6 +82,11 @@ public class HomeController {
         boolean goodcPhone = Validation.validatePhoneNumber(cPhone);
         if (!goodcPhone) {
             return new ModelAndView("error", "errmsg", "Invalid phone number");
+        }
+
+        boolean goodPasswordMatch = Validation.validatePhoneNumber(cPhone);
+        if (!goodPasswordMatch) {
+            return new ModelAndView("error", "errmsg", "Password mismatch");
         }
 
         boolean goodpassword = Validation.validatePassword(password);

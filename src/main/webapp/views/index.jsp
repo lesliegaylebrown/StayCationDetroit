@@ -10,11 +10,11 @@
 <br/><br/>
 
 <%--Buttons for links to registration and login--%>
-<center><a href="CreateAccount"><button> Register</button></a></center>
+<center><a href="CreateAccount"><button>Register</button></a></center>
 <center><a href="login"><button>Login</button></a></center>
 
 
-<%--Link back to home page--%>
-<a href="/"><button>Home Page</button></a>
+<%--&lt;%&ndash;Link back to home page&ndash;%&gt;--%>
+<%--<a href="/"><button>Home Page</button></a>--%>
 </body>
 </html>

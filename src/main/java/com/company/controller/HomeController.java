@@ -2,6 +2,10 @@ package com.company.controller;
 
 import com.company.model.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 //Brought in from the sessions code from Peter
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +49,6 @@ public class HomeController {
         return "index";// or views/test
     }
 
-
     //    This method takes the onclick request from the index page button "Registration" and calls the page
 //    CreateAccount.jsp
     @RequestMapping(value = "CreateAccount")
@@ -62,6 +65,13 @@ public class HomeController {
         return "Welcome";
     }
 
+
+    @RequestMapping(value = "Administration")
+    public String Administration() {
+        //if a controller method returns just a String
+        //Spring MVC knows it's a view name
+        return "Administration";
+    }
 
     //handle the submit of the user form, user input validation, and user password encryption
     @RequestMapping(value = "/addUser")
@@ -127,11 +137,60 @@ public class HomeController {
         return mv;
     }
 
+//    *+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
+
+//    Method to add buildings to the database
+@RequestMapping(value = "AddBuilding")
+public ModelAndView addUser(
+
+        @RequestParam("buildingId")String buildingId,
+         @RequestParam("buildingName") String buildingName,
+         @RequestParam("buildingAddress") String buildingAddress,
+         @RequestParam("buildingDescription") String buildingDescription,
+         @RequestParam("buildingImage") String buildingImage,
+         @RequestParam("qlineStops") String qlineStops,
+         @RequestParam("longitude") double longitude,
+         @RequestParam("latitude") double latitude
+) {
+
+    //add the info to DBase through DAO (Data Access Object Class)
+    boolean result = DAO.AddBuilding(buildingId, buildingName, buildingAddress, buildingDescription, buildingImage, qlineStops, longitude, latitude);
+    //check the result, if false sends the error code message from "modelObject:" to error.jsp to view
+    if (!result) {
+
+        return new ModelAndView("error", "errmsg", "Building add failed");
+    }
+//Creates Expression Language objects that link to the values of the objects below
+    ModelAndView mv = new ModelAndView("/AddBuildingResult");
+    mv.addObject("buildingId", buildingId);
+    mv.addObject("buildingName", buildingName);
+    mv.addObject("buildingAddress", buildingAddress);
+    mv.addObject("buildingDescription", buildingDescription);
+    mv.addObject("buildingImage", buildingImage);
+    mv.addObject("qlineStops", qlineStops);
+    mv.addObject("longitude", longitude);
+    mv.addObject("latitude", latitude);
+
+    return mv;
+}
+
 //this is an optional method that allows an admin to delete users,
 // or to allow the user to delete their account using delUserView
 
-    @RequestMapping(value = "getAllUsers")
-    public ModelAndView getAllUsers() {
+@RequestMapping(value = "getAllUsers")
+    public ModelAndView getAllUsers(HttpSession session,
+            HttpServletResponse response) {
+//        if (session.getAttribute("username") == null) {
+//            return new ModelAndView("error", "errmsg",
+//                    "You must be logged in. "
+//                            + "Please visit the <a href=\"/login\">Login Page</a>");
+//        }
+        if (session.getAttribute("username") != "SCDadmin") {
+            return new ModelAndView("error", "errmsg",
+                    "Access denied."
+                            );
+        }
+
         ArrayList<User> userList = DAO.getUserList();
 
 
@@ -141,7 +200,6 @@ public class HomeController {
 
         return new ModelAndView("delUserView", "uList", userList);
     }
-
 
 //    method to display all buildings etc... from the attractions Dbase
 
@@ -190,7 +248,7 @@ public class HomeController {
         String latLon = LatandLon;
         String test1 = "https://developers.zomato.com/api/v2.1/search?entity_type=metro&start=0&count=100&";
         String test2 = "&radius=160&sort=real_distance&order=asc";
-        String test3 = test1 + latLon + test2;
+        String test3 = test1 + LatandLon + test2;
         URI myuri = new URI(test3);
 
         try {
@@ -254,18 +312,20 @@ public class HomeController {
 //    userLogin.jsp form to authenticate entry
     @RequestMapping(value = "login")
     public String login() {
+
         //if a controller method returns just a String
         //Spring MVC knows it's a view name
         return "userLogin";
     }
-//
+
     @RequestMapping(value = "/checklogin")
     public ModelAndView login(
-            @RequestParam("userId")
-                    String userId,
+            HttpSession session,
 
-            @RequestParam("password")
-                    String password
+            @RequestParam("userId") String userId,
+
+            @RequestParam("password") String password
+
     ) {
 
         //checks the info against the DB login and password, through DAO
@@ -283,6 +343,39 @@ public class HomeController {
 
     }
 
+    @RequestMapping(value = "/checkAdminlogin")
+    public ModelAndView Adminlogin(
+            HttpSession session,
+
+            @RequestParam("userId") String userId,
+
+            @RequestParam("password") String password
+
+    ) {
+
+        //checks the info against the DB login and password, through DAO
+        boolean result = DAO.login(userId, password);
+
+        //if false calls error page
+        if (!result) {
+            //still have to write this view
+            return new ModelAndView("error", "errmsg", "User Login Failed");
+        }
+//         sends authenticated user to Home/Main page
+        ModelAndView mv = new ModelAndView("Administration");
+
+        return mv;
+
+    }
+
+    @RequestMapping("/logout")
+    public ModelAndView logout(HttpSession session)
+    {
+        //this is how we clear out the session info
+        session.invalidate();
+
+        ModelAndView mv = new
+                ModelAndView("logout");
+        return mv;
+    }
 }
-
-

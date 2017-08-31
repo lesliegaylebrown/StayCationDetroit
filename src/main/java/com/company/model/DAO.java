@@ -95,15 +95,12 @@ public class DAO {
 
             }
 
-
-
             return buildingList;
         } catch (Exception ex) {
             ex.printStackTrace();
             return null; //null result indicates an issue
         }
     }
-
 
     public static boolean addUser(
             String userId,
@@ -150,6 +147,101 @@ public class DAO {
 
     }
 
+    public static boolean addAdminUser(
+            String userId,
+            String fName,
+            String lName,
+            String email,
+            String Cphone,
+            String password
+    ) {
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            Connection mysqlConnection;
+            mysqlConnection = DriverManager.getConnection(
+                    DBCredentials.DB_ADDRESS,
+                    DBCredentials.USERNAME,
+                    DBCredentials.PASSWORD);
+
+            String addUserCommand = "INSERT INTO AdminUsers " +
+                    "(userId, fName, lName, email, cellPhone, password) " +
+                    "VALUES ('" +
+                    userId + "', '" +
+                    fName + "', '" +
+                    lName + "', '" +
+                    email + "', '" +
+                    Cphone + "', '" +
+
+                    password + "')";
+            System.out.println("SQL Query " + addUserCommand);
+
+            Statement st = mysqlConnection.createStatement();// creates the statement
+
+            int result = st.executeUpdate(addUserCommand);// executes the statement
+            // array list of users
+
+            if (result == 1)
+                return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            //null result indicates an issue
+        }
+        return false;
+
+    }
+
+
+//    Add building to dbase
+
+    public static boolean AddBuilding(
+            String buildingId,
+            String buildingName,
+            String buildingAddress,
+            String buildingDescription,
+            String buildingImage,
+            String qlineStops,
+            double longitude,
+            double latitude
+    ) {
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            Connection mysqlConnection;
+            mysqlConnection = DriverManager.getConnection(
+                    DBCredentials.DB_ADDRESS,
+                    DBCredentials.USERNAME,
+                    DBCredentials.PASSWORD);
+
+            String addBuildingCommand = "INSERT INTO attractions " +
+                    "(buildingId, buildingName, buildingAddress, buildingDescription, buildingImage, qlineStops, longitude, latitude) " +
+                    "VALUES ('" +
+                    buildingId + "', '" +
+                    buildingName + "', '" +
+                    buildingAddress + "', '" +
+                    buildingDescription + "', '" +"resources/buildings/"+buildingImage + "', '" +
+                    qlineStops + "', '" +
+                    longitude + "', '" +
+                    latitude + "')";
+//            System.out.println("SQL Query " + addBuildingCommand);
+
+            Statement st = mysqlConnection.createStatement();// creates the statement
+
+            int result = st.executeUpdate(addBuildingCommand);// executes the statement
+            // array list of users
+
+            if (result == 1)
+                return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            //null result indicates an issue
+        }
+        return false;
+
+    }
+
 
     public static boolean login(
             String userId,
@@ -169,6 +261,55 @@ public class DAO {
 
             String readUserCommand = "select userId, password from users where userId='"
             + userId + "'";
+
+            Statement readUsers = mysqlConnection.createStatement();// creates the statement
+
+            ResultSet results = readUsers.executeQuery(readUserCommand);// executes the statement
+
+            // array list of users
+            ArrayList<User> userList = new ArrayList<User>();
+
+            // map from the ResultSet to the ArrayList
+            while (results.next()) {
+
+                String dbResPassword = results.getString(6);
+                StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
+                boolean match = enc.checkPassword(password, dbResPassword);
+
+                if (match) {
+                    return true;
+                }
+            }
+
+            return false;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+        }
+        return true;
+    }
+
+
+
+    public static boolean Adminlogin(
+            String userId,
+            String password
+
+    ) {
+
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            Connection mysqlConnection;
+            mysqlConnection = DriverManager.getConnection(
+                    DBCredentials.DB_ADDRESS,
+                    DBCredentials.USERNAME,
+                    DBCredentials.PASSWORD);
+
+            String readUserCommand = "select userId, password from AdminUsers where userId='"
+                    + userId + "'";
 
             Statement readUsers = mysqlConnection.createStatement();// creates the statement
 

@@ -9,6 +9,7 @@
 <br/>
    <%--Buttons for links to registration and login--%>
    <a href="/getAllBuildings"><button>Buildings</button></a>
+   <a href="AdminLogin"><button>Admin Login</button></a>
    <%--<a href="/getAllUsers"><button>View/Delete Users</button></a>--%>
 
 </body>

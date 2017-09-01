@@ -73,6 +73,13 @@ public class HomeController {
         return "Administration";
     }
 
+    @RequestMapping(value = "AdminRegistration")
+    public String Administrationlgin() {
+        //if a controller method returns just a String
+        //Spring MVC knows it's a view name
+        return "CreateAdminAccount";
+    }
+
     //handle the submit of the user form, user input validation, and user password encryption
     @RequestMapping(value = "/addUser")
     public ModelAndView addUser(
@@ -81,7 +88,8 @@ public class HomeController {
             @RequestParam("lName") String lName,
             @RequestParam("email") String email,
             @RequestParam("Cphone") String cPhone,
-            @RequestParam("password") String password
+            @RequestParam("password") String password,
+            @RequestParam("password2") String password2
 
     ) {
 //        this code calls the validation methods for each registration field
@@ -106,7 +114,7 @@ public class HomeController {
             return new ModelAndView("error", "errmsg", "Invalid phone number");
         }
 
-        boolean goodPasswordMatch = Validation.validatePhoneNumber(cPhone);
+        boolean goodPasswordMatch = Validation.validatePasswordMatch(password, password2);
         if (!goodPasswordMatch) {
             return new ModelAndView("error", "errmsg", "Password mismatch");
         }
@@ -125,8 +133,8 @@ public class HomeController {
 
             return new ModelAndView("error", "errmsg", "user add failed");
         }
-//Creates Expression Language objects that link to the values of the objects below
         ModelAndView mv = new ModelAndView("/addUserResult");
+//Creates Expression Language objects that link to the values of the objects below
         mv.addObject("UserId", userId);
         mv.addObject("FirstName", fName);
         mv.addObject("LastName", lName);
@@ -185,11 +193,7 @@ public ModelAndView addUser(
 //                    "You must be logged in. "
 //                            + "Please visit the <a href=\"/login\">Login Page</a>");
 //        }
-        if (session.getAttribute("username") != "SCDadmin") {
-            return new ModelAndView("error", "errmsg",
-                    "Access denied."
-                            );
-        }
+
 
         ArrayList<User> userList = DAO.getUserList();
 

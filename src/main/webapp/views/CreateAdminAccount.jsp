@@ -4,12 +4,12 @@
 <html>
 <head>
     <title>Create Account</title>
-
+    <link rel="stylesheet" type="text/css" href="resources/StyleOne.css">
 </head>
 <body>
 
 <%--this form takes user input, to be sent to the addUser mapping in the HomeController, then Dbase--%>
-<form action="addUser" method="post">
+<form action="addAdminUser" method="post">
 
     Enter User ID. (User ID must be at least 3 to 12 characters long)
     <br>
@@ -32,41 +32,18 @@
 
     Password must be at least 8, but less than 60 characters long. Password must include one of each,<br>a capital letter, a lower case letter, a number, and one of these symbols (! @ # $ ?)<br>
         <input name="password" type="password" />
-        <%--<div class="fieldWrapper">--%>
-        <%--<label for="password1">Password:</label>--%>
-         <%--<input name="password1" id="password1" type="password" />--%>
-   <%--</div>--%>
-            <%--<div class="fieldWrapper">--%>
-        <%--<label for="password2">Confirm Password:</label>--%>
-     <%--<input name="password2" id ="password2" onekeyup= "checkPass(); return false;" type="password">--%>
-                <%--<span id="confirmMessage" class="confirmMessage"></span>--%>
-       <%--</div>         --%>
 
-
-                <%--<div class="tutorialWrapper">--%>
-                    <%--<form>--%>
-                        <%--<div class="fieldWrapper">--%>
-                            <%--<label for="pass1">Password:</label>--%>
-                            <%--<input name="pass1" id="pass1" type="password">--%>
-                        <%--</div>--%>
-                        <%--<div class="fieldWrapper">--%>
-                            <%--<label for="pass2">Confirm Password:</label>--%>
-                            <%--<input name="pass2" id="pass2" onkeyup="checkPass(); return false;" type="password">--%>
-                            <%--<span id="confirmMessage" class="confirmMessage"></span>--%>
-                        <%--</div>--%>
     </div>
     <br />
     <br />
 
-    <input type="submit" value="Add User" />
+    <input type="submit" value="Create Admin User" />
 
 
-
-    <input type="submit" value="Create Account" />
 
 </form>
 
-<a href="/"><button>Go Back To Home Page</button></a>
+<a href="/"><button class="button">Go Back To Home Page</button></a>
 
 </body>
 </html>

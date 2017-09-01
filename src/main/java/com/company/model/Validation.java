@@ -36,9 +36,12 @@ public class Validation {
         return (password.matches("^(?=.*[a-z])|(?=.*d)(?=.*[A-Z])|(?=.*[!@#$?.]).{8,64}"));
     }
 
-//    public static boolean validate
-//    (!(password.equals(password2)))
+    public static boolean validatePasswordMatch (String password, String password2){
+    return (password.equals(password2));
+    }
+
 //todo:comment
+
     public static String encryptPassword(String password) {
         StrongPasswordEncryptor enc = new StrongPasswordEncryptor();
 

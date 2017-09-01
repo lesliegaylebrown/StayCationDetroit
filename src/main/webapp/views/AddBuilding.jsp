@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="resources/StyleOne.css">
     <title>Create Account</title>
 
 </head>
@@ -49,7 +50,7 @@
 </form>
 
 <a href="/">
-    <button>Go Back To Home Page</button>
+    <button class="button" >Go Back To Home Page</button>
 </a>
 
 </body>

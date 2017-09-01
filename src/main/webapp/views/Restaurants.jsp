@@ -3,52 +3,54 @@
 <%@taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
+
+    <link rel="stylesheet" type="text/css" href="resources/StyleOne.css">
     <title>Eateries</title>
+    <style>
+        div.container {
+            width: 50%;
+            background-color:rgba(0, 0, 0, 0.7);            color: white;            margin: 8px 8px;
+            margin: 8px 8px;
+        }
+    </style>
 </head>
 <body>
+<img src="resources/buildings/StayCationLogo.png" height="100px>">
 
+<br><br><br><br><br><br>
 
-Restaurants near your selection.
+<div class="container">
+    <h2>Restaurants near your selection.</h2>
 
 
 <br><br>
 
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Location</th>
-        <th>Cuisine</th>
-        <th>Avg Cost For Two</th>
-        <th>Web Link</th>
 
-    </tr>
+    <%--<tr>--%>
+        <%--<th>Name</th>--%>
+        <%--<th>Location</th>--%>
+        <%--<th>Cuisine</th>--%>
+        <%--<th>Avg Cost For Two</th>--%>
+        <%--<th>Web Link</th>--%>
+
+    <%--</tr>--%>
     <c:forEach items = "${rList}" var="restaurant">
-        <tr>
+<div class=" container">
+                <h2>   Name: ${restaurant.restName}  <br> Location: ${restaurant.restLoc}<br>  Cuisine: ${restaurant.restCuisines}<br>  Average: ${restaurant.restAvgCost}<br>
+    </h2>
 
-            <td>
-                    ${restaurant.restName}
-            </td>
-            <td>
-                    ${restaurant.restLoc}
-            </td>
-            <td>
-                    ${restaurant.restCuisines}
-            </td>
-            <td>
-                    ${restaurant.restAvgCost}
-            </td>
-            <td>
 
-                <a href="${restaurant.restUrl}"target="_blank">View Website</a>
 
-            </td>
-        </tr>
-    </c:forEach>
 
-</table>
+</div>
+       <div> <a href="${restaurant.restUrl}"target="_blank" ><h3>View Website</h3>
+</div></c:forEach>
+
+
+</div>
 <br><br><br>
-<a href="/getAllBuildings"><button>Select another building</button></a><br>
-<a href="BackWelcome"><button>Welcome Page</button></a><br>
-<a href="/"><button>Home Page</button></a>
+<a href="/getAllBuildings"><button class="button">Select another building</button></a><br>
+<a href="BackWelcome"><button class="button">Welcome Page</button></a><br>
+<a href="/"><button class="button">Home Page</button></a>
 </body>
 </html>

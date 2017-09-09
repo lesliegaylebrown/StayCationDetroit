@@ -1,69 +1,82 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html><center hidden>
-    .container {
-    width: 150px;
-    height: 100px;
-    background-image: url("http://i.stack.imgur.com/2OrtT.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    }​
-</center>
+<html>
 <head>
+    <link rel="stylesheet" type="text/css" href="resources/StyleOne.css">
     <title>Building Selection</title>
+    <style>
+        div.container {
+            width: 50%;
+            background-color:rgba(0, 0, 0, 0.7);            color: white;            margin: 8px 8px;
+        }
+    </style>
+
 
 </head>
 <body>
+<img src="resources/buildings/StayCationLogo.png" height="100px>"
 
-<table border="1">
-    <tr>
+<br><br><br><br><br><br>
+
+    <%--<tr>--%>
 
 
-        <th>Building Image</th><th>Building Name</th><th>Building Address</th><th>Building Description</th><th>QLine Stops</th>
-    </tr>
+        <%--<th>Building Image</th><th>Building Name</th><th>Building Address</th><th>Building Description</th><th>QLine Stops</th><th>Eateries Near By</th>--%>
+    <%--</tr>--%>
+<center><div>
     <c:forEach items="${buildingList}" var="item">
-        <tr>
-            <td>
-                <div class="container"></div>​
+        <%--<tr>--%>
+            <%--<td>--%>
+
+        <div class="container">
+            <h1>${item.buildingName}  ${item.buildingAddress}</h1>
 
 
-            <img src="${item.buildingImage}" alt="${item.buildingName}"height = 150px width="150" >
+        </div>
+<div class="container">
 
-            </td>
+    <img src="${item.buildingImage}" alt="${item.buildingName}"height = 500px width="500" ><h3>${item.buildingDescription}</h3>
+        </div>
 
-            <td>
-                  ${item.buildingName}
-            </td>
+            <div
+                    class="container">
 
-            <td>
-                  ${item.buildingAddress}
-            </td>
 
-            <td>
-                  ${item.buildingDescription}
-            </td>
+                      </div>
 
-            <td>
-                    ${item.qLineStops}
-            </td>
+            <div class="container" >
 
-            <td>
+
+            </div>
+
+            <div class="container">
+                   <h2> QLine Stop: ${item.qLineStops}</h2>
+            </div>
+
+
+
+
                 <form action="restaurant" method="post">
+
+
+                    <input type="hidden" name="BuildingChoice"
+                           value="${item.buildingName}">
+
+
 
                     <input type="hidden" name="LatandLon"
                            value="lat=${item.latitude}&lon=${item.longitude}">
 
-                    <input type="submit" value="Choose">
-                </form>
+                    <button class="button" type="submit" value="Choose"/>Select ${item.buildingName} </button>
+                </form><br><br>
 
-            </td>
-        </tr>
+
     </c:forEach>
+</div></center>
 
-</table>
 
 <br><br>
-<a href="/"><button>Home Page</button></a>
+<a href="BackWelcome"><button class="button">Welcome Page</button></a><br>
+<a href="/"><button class="button">Home Page</button></a>
 </body>
 </html>

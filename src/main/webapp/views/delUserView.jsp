@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="resources/StyleOne.css">
     <title>Delete User</title>
 </head>
 <body>
@@ -34,6 +35,6 @@
 
 </table>
 <br><br>
-<a href="/"><button>Home Page</button></a>
+<a href="/"><button class="button">Home Page</button></a>
 </body>
 </html>
